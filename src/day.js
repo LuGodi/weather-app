@@ -1,4 +1,4 @@
-export default class Days {
+export default class Day {
   static icons = {
     // "temperature",
     // "humidity",
@@ -39,6 +39,6 @@ export default class Days {
     };
   }
   render() {
-    //implement the render function
+    //TODO implement the render function
   }
 }

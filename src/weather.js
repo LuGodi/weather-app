@@ -1,4 +1,4 @@
-import Days from "./days.js";
+import Day from "./day.js";
 export default class Weather {
   static weatherReport = {
     location: null,
@@ -59,11 +59,12 @@ export default class Weather {
     console.log(weatherReport);
     return weatherReport;
   }
+  //TODO maybe move this to days instead of here?
   static processDays(forecast, location) {
     console.log(forecast);
     forecast.forEach((day) => {
       console.log(day);
-      new Days(day, location);
+      new Day(day, location);
     });
   }
 }
