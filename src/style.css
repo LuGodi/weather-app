@@ -1,5 +1,5 @@
 :root {
-  background-color: var(--lighter-color);
+  background-color: var(--darker-color);
   color: white;
   font-family: sans-serif;
   --lighter-color: #1f2937;
@@ -17,8 +17,25 @@ body {
 
 .search-container input {
   height: 2rem;
-  width: 25ch;
+  width: 300px;
   border-radius: 8px;
   outline: none;
   border: 1px solid white;
+}
+
+.weather-info {
+  background-color: var(--lighter-color);
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.weather-info img {
+  height: 32px;
+  width: 32px;
+}
+.weather-info span {
+    
 }
