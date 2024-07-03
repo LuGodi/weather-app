@@ -1,0 +1,24 @@
+:root {
+  background-color: var(--lighter-color);
+  color: white;
+  font-family: sans-serif;
+  --lighter-color: #1f2937;
+  --darker-color: #111827;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  height: 80vh;
+}
+.main {
+  font-size: 1.3rem;
+}
+
+.search-container input {
+  height: 2rem;
+  width: 25ch;
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid white;
+}
