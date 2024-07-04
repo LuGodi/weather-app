@@ -1,5 +1,6 @@
 import Day from "./day.js";
 export default class Weather {
+  static days = [];
   static weatherReport = {
     location: null,
     humidity: null,
@@ -10,7 +11,25 @@ export default class Weather {
     forecast: null,
   };
   //or should I use a constructor ? maybe the static initializator?
-  static init() {}
+  static async init(location) {
+    // const weatherData = await this.load(location);
+    // this.
+    this.load(location)
+      .then((data) => {
+        console.log(data);
+
+        return this.processData(data);
+      })
+      .then((weatherReport) => {
+        console.log(weatherReport);
+        return this.processDays(weatherReport);
+      })
+      .then((processedDays) => {
+        console.log(processedDays);
+      })
+      .catch((e) => console.log(e));
+  }
+
   static async load(location) {
     const k = "4e4dde871a60444190235252243006";
     const url = "https://api.weatherapi.com/v1";
@@ -43,8 +62,9 @@ export default class Weather {
   }
 
   //peharps this could be split on a class that handles the astronomy fetch and processing?
-  static processData(currentData, astronomyData, forecastData) {
-    console.log(currentData);
+  static processData(weatherData) {
+    const { currentData, astronomyData, forecastData } = weatherData;
+
     const weatherReport = {
       location: currentData.location.name,
       temperature: currentData.current.temp_c,
@@ -56,15 +76,20 @@ export default class Weather {
       forecast: forecastData.forecast.forecastday,
     };
     this.weatherReport = weatherReport;
-    console.log(weatherReport);
+
     return weatherReport;
   }
   //TODO maybe move this to days instead of here?
-  static processDays(forecast, location) {
-    console.log(forecast);
+  static processDays(processedWeather) {
+    const { forecast, location } = processedWeather;
+
     forecast.forEach((day) => {
       console.log(day);
-      new Day(day, location);
+      const dayInstance = new Day(day, location);
+      this.days.push(dayInstance);
     });
+    console.log("rendered the following days");
+    console.log(this.days);
+    return this.days;
   }
 }

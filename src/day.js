@@ -1,12 +1,19 @@
+import moonImg from "../assets/weather-icons/moon.png";
+import termImg from "../assets/weather-icons/term_icon.png";
+import tideImg from "../assets/weather-icons/tide_icon.png";
+import humidityImg from "../assets/weather-icons/humidity_icon.png";
+import windImg from "../assets/weather-icons/wind_icon.png";
+
 export default class Day {
   static icons = {
-    // "temperature",
-    // "humidity",
-    // "condition",
-    // "moon",
-    // "wind",
-    // "tide",
+    temperature: termImg,
+    humidity: humidityImg,
+
+    moon: moonImg,
+    wind: windImg,
+    tide: tideImg,
   };
+  elements = {};
   constructor({ astro, date, day }, location) {
     this.location = location;
     this.temperature = {
@@ -21,10 +28,6 @@ export default class Day {
     this.date = date;
     this.wind = { kph: day.maxwind_kph, mph: day.maxwind_mph };
     // this.tide = tide;
-    console.log(`inside days ${astro} ${day}`);
-    console.log(astro);
-    console.log(day);
-    console.log(this.toString());
   }
   static async load() {}
   toString() {
@@ -40,5 +43,8 @@ export default class Day {
   }
   render() {
     //TODO implement the render function
+    Day.icons.array.forEach((element) => {
+      console.log(element);
+    });
   }
 }
