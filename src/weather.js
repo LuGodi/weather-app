@@ -14,18 +14,18 @@ export default class Weather {
   static async init(location) {
     // const weatherData = await this.load(location);
     // this.
-    this.load(location)
+    await this.load(location)
       .then((data) => {
-        console.log(data);
-
         return this.processData(data);
       })
       .then((weatherReport) => {
-        console.log(weatherReport);
         return this.processDays(weatherReport);
       })
       .then((processedDays) => {
         console.log(processedDays);
+        console.log("omg here should work");
+        this.days.forEach((day) => console.log("hi this is a day"));
+        return;
       })
       .catch((e) => console.log(e));
   }
@@ -88,8 +88,7 @@ export default class Weather {
       const dayInstance = new Day(day, location);
       this.days.push(dayInstance);
     });
-    console.log("rendered the following days");
-    console.log(this.days);
+
     return this.days;
   }
 }

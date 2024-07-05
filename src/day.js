@@ -8,7 +8,6 @@ export default class Day {
   static icons = {
     temperature: termImg,
     humidity: humidityImg,
-
     moon: moonImg,
     wind: windImg,
     tide: tideImg,
@@ -43,8 +42,17 @@ export default class Day {
   }
   render() {
     //TODO implement the render function
-    Day.icons.array.forEach((element) => {
-      console.log(element);
+    console.log("render icons");
+    console.log(Object.entries(Day.icons));
+    const iconElements = [];
+    Object.entries(Day.icons).forEach(([name, url]) => {
+      console.log(name, url);
+      const icon = new Image();
+      icon.src = url;
+      icon.alt = name;
+      console.log(icon);
+      iconElements.push(icon);
     });
+    console.log(iconElements);
   }
 }

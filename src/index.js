@@ -13,4 +13,10 @@ import Weather from "./weather.js";
 //   weatherData.forecastData
 // );
 // Weather.processDays(weatherInfo.forecast, weatherInfo.location);
-Weather.init("rio de janeiro");
+
+const info = document.querySelector(".weather-info");
+Weather.init("rio de janeiro").then(() => {
+  Weather.days.forEach((day) => {
+    day.render();
+  });
+});
