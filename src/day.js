@@ -64,12 +64,12 @@ export default class Day {
   //structure will consist of [tagname,classname and childs]
   //if its a text, it will be [text, textcontent]
   //for images, [img,classname,img.src]
-  render(key, value) {
+  render() {
     const childs = [];
     const container = ["div", "day-info", childs];
     // const boxContainer = ["div","container",[spanStructure,["text", this[value]]]]
     // const spanStructure = ["span","icon-container",[["img",`${key}-icon`,"imgsrc"],["text",`${key}`]]]
-
+    console.log(this);
     this.iconsLoop((key, value) => {
       const spanStructure = [
         "span",
@@ -82,10 +82,14 @@ export default class Day {
       const boxContainer = [
         "div",
         "container",
-        [spanStructure, ["text", this[value]]],
+        [
+          spanStructure,
+          ["span", `${key}-value`, [["text", JSON.stringify(this[key])]]],
+        ],
       ];
       childs.push(boxContainer);
-    });
+    }, this);
     console.log(container);
+    return container;
   }
 }

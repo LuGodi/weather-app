@@ -1,5 +1,6 @@
 import Day from "./day.js";
 export default class Weather {
+  static prefer = { temperature: "celsius", wind: "km/h" };
   static days = [];
   static weatherReport = {
     location: null,

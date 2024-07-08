@@ -1,4 +1,5 @@
 import "./style.css";
+import ScreenController from "./screen_Controller.js";
 
 import Weather from "./weather.js";
 
@@ -18,6 +19,7 @@ const info = document.querySelector(".weather-info");
 Weather.init("rio de janeiro").then(() => {
   Weather.days.forEach((day) => {
     console.log(day);
-    info.append(day.render());
+
+    info.append(ScreenController.renderer(day.render()));
   });
 });

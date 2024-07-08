@@ -25,11 +25,11 @@ body {
 
 .weather-info {
   background-color: var(--lighter-color);
-  width: 300px;
-  height: 300px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+  row-gap: 20px;
 }
 
 .weather-info img {
@@ -37,5 +37,12 @@ body {
   width: 32px;
 }
 .weather-info span {
-    
+}
+.day-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.container {
+  display: flex;
+  flex-direction: column;
 }
