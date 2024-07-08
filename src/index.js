@@ -17,6 +17,7 @@ import Weather from "./weather.js";
 const info = document.querySelector(".weather-info");
 Weather.init("rio de janeiro").then(() => {
   Weather.days.forEach((day) => {
-    day.render();
+    console.log(day);
+    info.append(day.render());
   });
 });

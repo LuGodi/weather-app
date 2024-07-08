@@ -1,12 +1,12 @@
 import moonImg from "../assets/weather-icons/moon.png";
-import termImg from "../assets/weather-icons/term_icon.png";
+import termometerImg from "../assets/weather-icons/term_icon.png";
 import tideImg from "../assets/weather-icons/tide_icon.png";
 import humidityImg from "../assets/weather-icons/humidity_icon.png";
 import windImg from "../assets/weather-icons/wind_icon.png";
 
 export default class Day {
   static icons = {
-    temperature: termImg,
+    temperature: termometerImg,
     humidity: humidityImg,
     moon: moonImg,
     wind: windImg,
@@ -40,7 +40,7 @@ export default class Day {
       wind: this.wind,
     };
   }
-  render() {
+  renderIcons() {
     //TODO implement the render function
     console.log("render icons");
     console.log(Object.entries(Day.icons));
@@ -53,6 +53,39 @@ export default class Day {
       console.log(icon);
       iconElements.push(icon);
     });
-    console.log(iconElements);
+    return iconElements;
+  }
+  iconsLoop(func) {
+    Object.entries(Day.icons).forEach(([key, value]) => {
+      func(key, value);
+    });
+  }
+
+  //structure will consist of [tagname,classname and childs]
+  //if its a text, it will be [text, textcontent]
+  //for images, [img,classname,img.src]
+  render(key, value) {
+    const childs = [];
+    const container = ["div", "day-info", childs];
+    // const boxContainer = ["div","container",[spanStructure,["text", this[value]]]]
+    // const spanStructure = ["span","icon-container",[["img",`${key}-icon`,"imgsrc"],["text",`${key}`]]]
+
+    this.iconsLoop((key, value) => {
+      const spanStructure = [
+        "span",
+        "icon-container",
+        [
+          ["img", `${key}-icon`, value],
+          ["text", `${key}`],
+        ],
+      ];
+      const boxContainer = [
+        "div",
+        "container",
+        [spanStructure, ["text", this[value]]],
+      ];
+      childs.push(boxContainer);
+    });
+    console.log(container);
   }
 }
