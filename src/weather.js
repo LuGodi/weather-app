@@ -25,7 +25,7 @@ export default class Weather {
       .then((processedDays) => {
         console.log(processedDays);
         console.log("omg here should work");
-        this.days.forEach((day) => console.log("hi this is a day"));
+        this.days.forEach((day) => console.log("hi this is a day", day));
         return;
       })
       .catch((e) => console.log(e));
