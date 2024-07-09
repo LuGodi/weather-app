@@ -1,44 +1,43 @@
 export default class ScreenController {
-  //structure will consist of [tagname,classname and childs]
-  //if its a text, it will be [text, textcontent]
-  //for images, [img,classname,img.src]
-  static renderer(htmlSkeleton) {
-    const Elements = [];
+  static cachedDom = {
+    mainEl: document.querySelector(".main"),
+  };
+  static renderSearchInput() {
+    const searchContainer = document.createElement("div");
+    searchContainer.classList.add("search-container");
+    const inputSearch = document.createElement("input");
+    inputSearch.type = "search";
+    searchContainer.append(inputSearch);
+    return searchContainer;
+  }
+  static renderDayInfo(day) {
+    const dayElements = [];
+    const topEl = document.createElement("div");
+    const locationEl = document.createElement("span");
+    const temperatureContainer = this.#renderTemperatureInfo(day);
+    topEl.classList.add("weather-top");
+    locationEl.classList.add("location-container");
+    locationEl.textContent = day.location;
+    topEl.append(locationEl, temperatureContainer);
 
-    // const parentElement;
-    const structure = htmlSkeleton;
-    console.log(structure);
-    const tagname = structure[0];
-    const className = structure[1];
-    const childs = structure[2];
-    if (tagname === "text") {
-      return this.renderText(structure);
-    } else if (tagname === "img") {
-      console.log(structure);
-      return this.renderImg(structure);
-    } else {
-      const element = document.createElement(tagname);
-      element.className = className;
-      if (childs === undefined || childs == null) return;
-      Elements.push(element);
-      for (const child of childs) {
-        const childElement = this.renderer(child);
-        element.append(childElement);
-      }
-      console.log(element);
-      console.log(Elements);
-      return element;
-    }
+    this.cachedDom.mainEl.replaceChildren(topEl);
   }
-  static renderText(textArray) {
-    const textNode = document.createTextNode(textArray[1]);
-    return textNode;
-  }
-  static renderImg(imgArray) {
-    const imgElement = document.createElement("img");
-    imgElement.className = imgArray[1];
-    imgElement.src = imgArray[2];
-    return imgElement;
+  static #renderTemperatureInfo(day) {
+    const temperatureContainer = document.createElement("div");
+    const averageSpan = document.createElement("span");
+    const minMaxContainer = document.createElement("div");
+    const maxSpan = document.createElement("span");
+    const minSpan = document.createElement("span");
+    const conditionSpan = document.createElement("span");
+    temperatureContainer.classList.add("temperature-info-container");
+    averageSpan.textContent = day.temperature.average.celsius;
+    minMaxContainer.classList.add(".min-max-container");
+    minSpan.textContent = day.temperature.min.celsius;
+    maxSpan.textContent = day.temperature.max.celsius;
+    conditionSpan.textContent = day.condition;
+    minMaxContainer.append(minSpan, maxSpan);
+    temperatureContainer.append(averageSpan, conditionSpan, minMaxContainer);
+    return temperatureContainer;
   }
 }
 //TODO

@@ -9,10 +9,13 @@
 body {
   display: grid;
   place-items: center;
+  align-items: start;
   height: 80vh;
 }
 .main {
   font-size: 1.3rem;
+  width: 80vw;
+  background-color: var(--lighter-color);
 }
 
 .search-container input {
@@ -23,26 +26,17 @@ body {
   border: 1px solid white;
 }
 
-.weather-info {
-  background-color: var(--lighter-color);
-
+.weather-top {
+  margin-top: 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  row-gap: 20px;
+  align-items: center;
+  column-gap: 3rem;
+  justify-content: space-around;
 }
-
-.weather-info img {
-  height: 32px;
-  width: 32px;
+.location-container {
+  font-size: 2rem;
 }
-.weather-info span {
-}
-.day-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-.container {
+.temperature-info-container {
   display: flex;
   flex-direction: column;
 }
