@@ -22,20 +22,28 @@ export default class ScreenController {
 
     this.cachedDom.mainEl.replaceChildren(topEl);
   }
-  static #renderTemperatureInfo(day) {
+  static #renderTemperatureInfo(day, separator = " / ", scale = "celsius") {
     const temperatureContainer = document.createElement("div");
     const averageSpan = document.createElement("span");
     const minMaxContainer = document.createElement("div");
     const maxSpan = document.createElement("span");
     const minSpan = document.createElement("span");
+    const minMaxDivisor = document.createElement("span");
     const conditionSpan = document.createElement("span");
     temperatureContainer.classList.add("temperature-info-container");
-    averageSpan.textContent = day.temperature.average.celsius;
-    minMaxContainer.classList.add(".min-max-container");
-    minSpan.textContent = day.temperature.min.celsius;
-    maxSpan.textContent = day.temperature.max.celsius;
+    averageSpan.classList.add("average-temperature");
+    minMaxContainer.classList.add("min-max-temperature-container");
+    minSpan.classList.add("min-temperature");
+    maxSpan.classList.add("max-temperature");
+    averageSpan.textContent = day.temperature.average[scale];
+    minSpan.textContent = day.temperature.min[scale];
+    maxSpan.textContent = day.temperature.max[scale];
+    minMaxDivisor.textContent = separator;
     conditionSpan.textContent = day.condition;
-    minMaxContainer.append(minSpan, maxSpan);
+    [minSpan, maxSpan, averageSpan].forEach(
+      (element) => (element.dataset.scale = scale[0])
+    );
+    minMaxContainer.append(minSpan, minMaxDivisor, maxSpan);
     temperatureContainer.append(averageSpan, conditionSpan, minMaxContainer);
     return temperatureContainer;
   }
