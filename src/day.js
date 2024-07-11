@@ -1,4 +1,4 @@
-import moonImg from "../assets/weather-icons/moon.png";
+import moonImg from "../assets/weather-icons/moon_icon.png";
 import termometerImg from "../assets/weather-icons/term_icon.png";
 import tideImg from "../assets/weather-icons/tide_icon.png";
 import humidityImg from "../assets/weather-icons/humidity_icon.png";

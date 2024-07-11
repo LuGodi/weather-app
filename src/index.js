@@ -18,6 +18,6 @@ import Weather from "./weather.js";
 Weather.init("rio de janeiro").then(() => {
   Weather.days.forEach((day) => {
     console.log(day);
-    ScreenController.renderDayInfo(day);
+    ScreenController.renderDay(day);
   });
 });
