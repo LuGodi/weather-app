@@ -1,6 +1,11 @@
 import Day from "./day.js";
 export default class Weather {
-  static prefer = { temperature: "celsius", wind: "km/h" };
+  static scale = {
+    metric: { temperature: "celsius", wind: "km" },
+    us: { temperature: "fahrenheit", wind: "miles" },
+    uk: { temperature: "celsius", wind: "miles" },
+  };
+  static activeScale = "us";
   static days = [];
   static weatherReport = {
     location: null,
@@ -18,10 +23,10 @@ export default class Weather {
     sunset: null,
   };
   //or should I use a constructor ? maybe the static initializator?
-  static async init(location) {
+  static async init(location, unitGroup = this.activeScale) {
     // const weatherData = await this.load(location);
     // this.
-    await this.load(location)
+    await this.load(location, unitGroup)
       .then((data) => {
         return this.processData(data);
       })
@@ -41,16 +46,9 @@ export default class Weather {
   //unit group metric us or uk
   static async load(location, unitGroup = "metric") {
     const k = "678D27DNS9385FAAA5R7NBRV3";
-    const url = "https://api.weatherapi.com/v1";
     const days = "next7days";
     const urlRequest = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${days}?unitGroup=${unitGroup}&key=${k}`;
-    const searchString = location;
 
-    const urls = {
-      current: `${url}/current.json?key=${k}&q=${searchString}`,
-      astronomy: `${url}/astronomy.json?key=${k}&q=${searchString}`,
-      forecast: `${url}/forecast.json?key=${k}&q=${searchString}&days=${days}`,
-    };
     //TODO change here
     try {
       const response = await fetch(urlRequest);
