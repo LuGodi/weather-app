@@ -5,11 +5,17 @@ export default class Weather {
   static weatherReport = {
     location: null,
     humidity: null,
-    temperature: null,
+    temperature: { max: null, min: null, average: null, feelsLike: null },
     condition: null,
     moon: null,
     wind: null,
-    forecast: null,
+    datetime: null,
+    precipitation: null,
+    uvIndex: null,
+    icon: null,
+    description: null,
+    sunrise: null,
+    sunset: null,
   };
   //or should I use a constructor ? maybe the static initializator?
   static async init(location) {
@@ -31,32 +37,29 @@ export default class Weather {
       .catch((e) => console.log(e));
   }
 
-  static async load(location) {
-    const k = "4e4dde871a60444190235252243006";
+  //https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/[location]/[date1]/[date2]?key=YOUR_API_KEY
+  //unit group metric us or uk
+  static async load(location, unitGroup = "metric") {
+    const k = "678D27DNS9385FAAA5R7NBRV3";
     const url = "https://api.weatherapi.com/v1";
+    const days = "next7days";
+    const urlRequest = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${days}?unitGroup=${unitGroup}&key=${k}`;
     const searchString = location;
-    const days = 3;
+
     const urls = {
       current: `${url}/current.json?key=${k}&q=${searchString}`,
       astronomy: `${url}/astronomy.json?key=${k}&q=${searchString}`,
       forecast: `${url}/forecast.json?key=${k}&q=${searchString}&days=${days}`,
     };
-
+    //TODO change here
     try {
-      const [currentStream, astronomyStream, forecastStream] =
-        await Promise.all([
-          fetch(urls.current),
-          fetch(urls.astronomy),
-          fetch(urls.forecast),
-        ]);
-
-      const [currentData, astronomyData, forecastData] = await Promise.all([
-        currentStream.json(),
-        astronomyStream.json(),
-        forecastStream.json(),
-      ]);
-
-      return { currentData, astronomyData, forecastData };
+      const response = await fetch(urlRequest);
+      if (response.ok === false) {
+        throw new Error("failed to fetch");
+      }
+      const jsonData = await response.json();
+      console.log(jsonData);
+      return jsonData;
     } catch (error) {
       console.log(error);
     }
@@ -64,32 +67,50 @@ export default class Weather {
 
   //peharps this could be split on a class that handles the astronomy fetch and processing?
   static processData(weatherData) {
-    const { currentData, astronomyData, forecastData } = weatherData;
+    // const { currentData, astronomyData, forecastData } = weatherData;
 
     const weatherReport = {
-      location: currentData.location.name,
-      temperature: currentData.current.temp_c,
-      humidity: currentData.current.humidity,
-      condition: currentData.current.condition.text,
-      moon: astronomyData.astronomy.astro.moon_phase,
-
-      wind: currentData.current.wind_kph,
-      forecast: forecastData.forecast.forecastday,
+      location: weatherData.resolvedAddress,
+      days: weatherData.days,
     };
-    this.weatherReport = weatherReport;
 
     return weatherReport;
   }
   //TODO maybe move this to days instead of here?
+  //actually this should process days, by giving it to days to destructure it makes coupling worse
   static processDays(processedWeather) {
-    const { forecast, location } = processedWeather;
+    const { days, location } = processedWeather;
 
-    forecast.forEach((day) => {
+    days.forEach((day) => {
+      const dayReport = this.#processDay(day);
       console.log(day);
-      const dayInstance = new Day(day, location);
+      console.log(dayReport);
+      const dayInstance = new Day(dayReport, location);
       this.days.push(dayInstance);
     });
 
     return this.days;
+  }
+  static #processDay(day) {
+    const weatherReport = {
+      humidity: day.humidity,
+      temperature: {
+        max: day.tempmax,
+        min: day.tempmin,
+        average: day.temp,
+        feelsLike: day.feelsike,
+      },
+      condition: day.conditions,
+      moon: day.moonphase,
+      wind: day.windspeed,
+      datetime: day.datetime,
+      precipitation: day.precipprob,
+      uvIndex: day.uvindex,
+      icon: day.icon,
+      description: day.description,
+      sunrise: day.sunrise,
+      sunset: day.sunset,
+    };
+    return weatherReport;
   }
 }

@@ -27,10 +27,12 @@ body {
   border: 1px solid white;
 }
 
-.main div {
+.main > div {
   margin: 20px 10px;
+  padding-bottom: 20px;
 }
 .weather-top {
+  padding-top: 0px;
   margin: 20px 10px;
   display: flex;
   align-items: center;
@@ -48,6 +50,10 @@ body {
   align-items: center;
   row-gap: 10px;
   font-size: 1rem;
+}
+.temperature-info-container > * {
+  flex: 1;
+  margin: 0;
 }
 
 .min-temperature::after {
@@ -82,6 +88,7 @@ span[data-scale]::after {
 
 .weather-mid {
   display: flex;
+  gap: 20px;
 }
 .weather-mid .additional-container {
   display: flex;

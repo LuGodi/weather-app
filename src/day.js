@@ -13,19 +13,25 @@ export default class Day {
     tide: tideImg,
   };
   iconElements = {};
-  constructor({ astro, date, day }, location) {
+
+  constructor(dayReport, location) {
     this.location = location;
     this.temperature = {
-      average: { celsius: day.avgtemp_c, fahrenheit: day.avgtemp_f },
-      min: { celsius: day.mintemp_c, fahrenheit: day.mintemp_f },
-      max: { celsius: day.maxtemp_c, fahrenheit: day.maxtemp_f },
+      average: dayReport.temperature.average,
+      min: dayReport.temperature.min,
+      max: dayReport.temperature.max,
     };
-    this.humidity = day.avghumidity;
-    this.condition = day.condition.text;
-    this.moon = astro.moon_phase;
+    this.humidity = dayReport.humidity;
+    this.condition = dayReport.condition;
+    this.moon = dayReport.moon;
     //use the date library that I used before
-    this.date = date;
-    this.wind = { kph: day.maxwind_kph, mph: day.maxwind_mph };
+    this.datetime = dayReport.datetime;
+    this.wind = dayReport.wind;
+    this.sunrise = dayReport.sunrise;
+    this.sunset = dayReport.sunset;
+    this.description = dayReport.description;
+    this.condition = dayReport.condition;
+    this.icon = dayReport.icon;
     this.#renderIcons();
     // this.tide = tide;
   }
