@@ -99,7 +99,9 @@ export default class Weather {
         feelsLike: day.feelsike,
       },
       condition: day.conditions,
-      moon: day.moonphase,
+      moon: this.#processMoon(day.moonphase),
+
+      moonValue: day.moonphase,
       wind: day.windspeed,
       datetime: day.datetime,
       precipitation: day.precipprob,
@@ -110,5 +112,36 @@ export default class Weather {
       sunset: day.sunset,
     };
     return weatherReport;
+  }
+  static #processMoon(moonValue) {
+    let moonphase;
+    //switch or object
+    switch (true) {
+      case moonValue === 0:
+        moonphase = "New Moon";
+        break;
+      case moonValue < 0.25:
+        moonphase = "Waxing Crescent";
+        break;
+      case moonValue === 0.25:
+        moonphase = "First Quarter";
+        break;
+      case moonValue < 0.5:
+        moonphase = "Waxing Gibbous";
+        break;
+      case moonValue === 0.5:
+        moonphase = "Full Moon";
+        break;
+      case moonValue < 0.75:
+        moonphase = "Waning Gibbous";
+        break;
+      case moonValue === 0.75:
+        moonphase = "Last Quarter";
+        break;
+      case moonValue < 1:
+        moonphase = "Waning Crescent";
+        break;
+    }
+    return moonphase;
   }
 }

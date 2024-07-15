@@ -12,7 +12,6 @@ export default class Day {
     wind: windImg,
     tide: tideImg,
   };
-  iconElements = {};
 
   constructor(dayReport, location) {
     this.location = location;
@@ -24,6 +23,7 @@ export default class Day {
     this.humidity = dayReport.humidity;
     this.condition = dayReport.condition;
     this.moon = dayReport.moon;
+    this.moonValue = dayReport.moonValue;
     //use the date library that I used before
     this.datetime = dayReport.datetime;
     this.wind = dayReport.wind;
@@ -32,7 +32,7 @@ export default class Day {
     this.description = dayReport.description;
     this.condition = dayReport.condition;
     this.icon = dayReport.icon;
-    this.#renderIcons();
+
     // this.tide = tide;
   }
   static async load() {}
@@ -47,26 +47,10 @@ export default class Day {
       wind: this.wind,
     };
   }
-  #renderIcons() {
-    //TODO implement the render function
-    console.log("render icons");
-    console.log(Object.entries(Day.icons));
 
-    Object.entries(Day.icons).forEach(([name, url]) => {
-      console.log(name, url);
-      const icon = new Image();
-      icon.src = url;
-      icon.alt = name;
-      console.log(icon);
-      this.iconElements[name] = icon;
-    });
-
-    console.log(this.iconElements);
-    return this.iconElements;
-  }
-  iconsLoop(func) {
-    Object.entries(Day.icons).forEach(([key, value]) => {
-      func(key, value);
-    });
+  list(func) {
+    for (const [weatherProperty, value] of Object.entries(this)) {
+      func(weatherProperty, value, this);
+    }
   }
 }
