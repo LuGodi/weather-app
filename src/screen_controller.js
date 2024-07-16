@@ -1,4 +1,5 @@
 import Weather from "./weather";
+import renderUtil from "./render_util";
 
 export default class ScreenController {
   //theres most certainly a better way
@@ -6,6 +7,7 @@ export default class ScreenController {
   static cachedDom = {
     mainEl: document.querySelector(".main"),
   };
+  static conditionIcons = renderUtil.importedConditionIcons();
   static renderSearchInput() {
     const searchContainer = document.createElement("div");
     searchContainer.classList.add("search-container");
@@ -67,6 +69,7 @@ export default class ScreenController {
         "location",
         "description",
         "condition",
+        "hours",
       ];
       if (undesiredweatherProperties.includes(weatherProperty) === false) {
         const container = this.#additionalInfoContainer(
@@ -123,13 +126,13 @@ export default class ScreenController {
     temperatureContainer.append(averageSpan, conditionSpan, minMaxContainer);
     return temperatureContainer;
   }
-}
-//TODO
+  static renderHoursChart(day) {
+    const mainContainer = document.createElement("div");
+    mainContainer.classList.add("hours-chart");
 
-class renderUtil {
-  //TODO
-  static splitOnUpperCase(string) {
-    const regex = /(\w)([A-Z])/g;
-    return string.replace(regex, "$1 $2");
+    day.listHours((key, value, hourinstance) => {
+      const hourValue = document.createElement("span");
+      const iconWeather = document.createElement("img");
+    });
   }
 }

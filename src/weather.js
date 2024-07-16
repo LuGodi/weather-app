@@ -103,7 +103,7 @@ export default class Weather {
       const dayInstance = new Day(dayReport, location);
 
       dayReport.hours.forEach((hour) => {
-        const hourInstance = new Hour(hour.dateTime, hour);
+        const hourInstance = new Hour(hour.datetime, hour);
         dayInstance.hours.push(hourInstance);
       });
 

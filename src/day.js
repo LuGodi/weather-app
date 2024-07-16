@@ -57,4 +57,9 @@ export default class Day {
       func(weatherProperty, value, this);
     }
   }
+  listHours(func) {
+    this.hours.forEach((hour) => {
+      func(hour);
+    });
+  }
 }
