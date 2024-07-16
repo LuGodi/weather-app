@@ -1,9 +1,24 @@
 import Day from "./day.js";
 export default class Weather {
   static scale = {
-    metric: { temperature: "celsius", wind: "km" },
-    us: { temperature: "fahrenheit", wind: "miles" },
-    uk: { temperature: "celsius", wind: "miles" },
+    metric: {
+      temperature: "celsius",
+      wind: "km",
+      precipitation: "%",
+      humidity: "%",
+    },
+    us: {
+      temperature: "fahrenheit",
+      wind: "miles",
+      precipitationChance: "%",
+      humidity: "%",
+    },
+    uk: {
+      temperature: "celsius",
+      wind: "miles",
+      precipitationChance: "%",
+      humidity: "%",
+    },
   };
   static activeScale = "us";
   static days = [];

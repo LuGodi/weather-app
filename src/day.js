@@ -12,7 +12,7 @@ export default class Day {
     wind: windImg,
     tide: tideImg,
   };
-
+  #moonValue;
   constructor(dayReport, location) {
     this.location = location;
     this.temperature = {
@@ -23,7 +23,7 @@ export default class Day {
     this.humidity = dayReport.humidity;
     this.condition = dayReport.condition;
     this.moon = dayReport.moon;
-    this.moonValue = dayReport.moonValue;
+    this.#moonValue = dayReport.moonValue;
     //use the date library that I used before
     this.datetime = dayReport.datetime;
     this.wind = dayReport.wind;
@@ -32,6 +32,7 @@ export default class Day {
     this.description = dayReport.description;
     this.condition = dayReport.condition;
     this.icon = dayReport.icon;
+    this.precipitationChance = dayReport.precipitation;
 
     // this.tide = tide;
   }

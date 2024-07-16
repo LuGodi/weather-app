@@ -41,15 +41,36 @@ export default class ScreenController {
   }
   static #renderDayAdditionalInfo(day) {
     const midEl = document.createElement("div");
-    const containerHumidity = this.#additionalInfoContainer(
-      day,
-      "humidity",
-      "%"
-    );
-    const containerWind = this.#additionalInfoContainer(day, "wind");
-    const containerMoon = this.#additionalInfoContainer(day, "moon");
+    const containers = {};
+    // const containerHumidity = this.#additionalInfoContainer(
+    //   day,
+    //   "humidity",
+    //   "%"
+    // );
+    // const containerWind = this.#additionalInfoContainer(day, "wind");
+    // const containerMoon = this.#additionalInfoContainer(day, "moon");
+    day.list((weatherProperty, value, currentDay) => {
+      const undesiredweatherProperties = [
+        "temperature",
+        "datetime",
+        "icon",
+        "location",
+        "description",
+        "condition",
+      ];
+      if (undesiredweatherProperties.includes(weatherProperty) === false) {
+        const container = this.#additionalInfoContainer(
+          currentDay,
+          weatherProperty
+        );
+        containers[weatherProperty] = container;
+      }
+    });
+    console.log("logging containers ");
+    console.log(containers);
     midEl.classList.add("weather-mid");
-    midEl.append(containerHumidity, containerWind, containerMoon);
+    midEl.append(...Object.values(containers));
+
     return midEl;
   }
 
@@ -59,7 +80,7 @@ export default class ScreenController {
     const value = document.createElement("span");
     container.classList.add("additional-container");
     title.classList.add(`${attribute}-span`);
-    title.textContent = attribute;
+    title.textContent = renderUtil.splitOnUpperCase(attribute);
     title.dataset.icon = `${attribute}_icon`;
     if (this.scale[attribute]) value.dataset.scale = this.scale[attribute];
 
@@ -94,3 +115,11 @@ export default class ScreenController {
   }
 }
 //TODO
+
+class renderUtil {
+  //TODO
+  static splitOnUpperCase(string) {
+    const regex = /(\w)([A-Z])/g;
+    return string.replace(regex, "$1 $2");
+  }
+}

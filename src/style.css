@@ -89,6 +89,7 @@ span[data-scale]::after {
 .weather-mid {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 .weather-mid .additional-container {
   display: flex;
@@ -96,6 +97,7 @@ span[data-scale]::after {
   flex-direction: column;
   border: 1px solid var(--darker-color);
   padding: 5px 5px;
+  white-space: nowrap;
 }
 .weather-mid .additional-container span[data-icon]::before {
   content: " ";
