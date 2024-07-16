@@ -1,4 +1,5 @@
 import Day from "./day.js";
+import Hour from "./hour.js";
 export default class Weather {
   static scale = {
     metric: {
@@ -20,7 +21,7 @@ export default class Weather {
       humidity: "%",
     },
   };
-  static activeScale = "us";
+  static activeScale = "metric";
   static days = [];
   static weatherReport = {
     location: null,
@@ -98,7 +99,14 @@ export default class Weather {
       const dayReport = this.#processDay(day);
       console.log(day);
       console.log(dayReport);
+
       const dayInstance = new Day(dayReport, location);
+
+      dayReport.hours.forEach((hour) => {
+        const hourInstance = new Hour(hour.dateTime, hour);
+        dayInstance.hours.push(hourInstance);
+      });
+
       this.days.push(dayInstance);
     });
 
@@ -111,7 +119,7 @@ export default class Weather {
         max: day.tempmax,
         min: day.tempmin,
         average: day.temp,
-        feelsLike: day.feelsike,
+        feelslike: day.feelslike,
       },
       condition: day.conditions,
       moon: this.#processMoon(day.moonphase),
@@ -126,7 +134,17 @@ export default class Weather {
       sunrise: day.sunrise,
       sunset: day.sunset,
     };
+    if ("hours" in day) {
+      weatherReport.hours = this.#processHours(day.hours);
+    }
     return weatherReport;
+  }
+  static #processHours(hours) {
+    const processedHours = [];
+    hours.forEach((hour) => {
+      processedHours.push(this.#processDay(hour));
+    });
+    return processedHours;
   }
   static #processMoon(moonValue) {
     let moonphase;

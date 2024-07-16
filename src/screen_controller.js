@@ -17,7 +17,7 @@ export default class ScreenController {
   //TODO add date fns for proper date display
   static #renderDayDateInfo(day) {
     const divEl = document.createElement("div");
-    divEl.textContent = day.date;
+    divEl.textContent = day.datetime;
     return divEl;
   }
 
@@ -31,24 +31,34 @@ export default class ScreenController {
   static #renderDayTopInfo(day) {
     const topEl = document.createElement("div");
     const locationEl = document.createElement("span");
+    const feelsLikeEl = document.createElement("span");
     const temperatureContainer = this.#renderTemperatureInfo(day);
+    const weatherDescription = document.createElement("span");
+    const iconEl = document.createElement("span");
+    iconEl.classList.add("icon-container");
     topEl.classList.add("weather-top");
     locationEl.classList.add("location-container");
+    feelsLikeEl.classList.add("feelslike-container");
+    weatherDescription.classList.add("weather-description");
+    iconEl.textContent = day.icon;
     locationEl.textContent = day.location;
+    feelsLikeEl.textContent = `Feels like ${day.temperature.feelslike}`;
+    feelsLikeEl.dataset.scale = this.scale.temperature;
+    weatherDescription.textContent = day.description;
+    locationEl.append(iconEl);
+    topEl.append(
+      locationEl,
+      temperatureContainer,
 
-    topEl.append(locationEl, temperatureContainer);
+      feelsLikeEl,
+      weatherDescription
+    );
     return topEl;
   }
   static #renderDayAdditionalInfo(day) {
     const midEl = document.createElement("div");
     const containers = {};
-    // const containerHumidity = this.#additionalInfoContainer(
-    //   day,
-    //   "humidity",
-    //   "%"
-    // );
-    // const containerWind = this.#additionalInfoContainer(day, "wind");
-    // const containerMoon = this.#additionalInfoContainer(day, "moon");
+
     day.list((weatherProperty, value, currentDay) => {
       const undesiredweatherProperties = [
         "temperature",

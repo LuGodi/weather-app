@@ -17,6 +17,7 @@ body {
   font-size: 1rem;
   width: 80vw;
   background-color: var(--lighter-color);
+  max-width: 600px;
 }
 
 .search-container input {
@@ -38,11 +39,19 @@ body {
   align-items: center;
   column-gap: 3rem;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 .location-container {
   font-size: 2rem;
   margin-right: auto;
   margin-left: 10px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+span.feelslike-container,
+span.weather-description {
+  flex-basis: 100%;
 }
 .temperature-info-container {
   display: flex;

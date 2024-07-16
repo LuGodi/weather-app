@@ -5,6 +5,7 @@ import humidityImg from "../assets/weather-icons/humidity_icon.png";
 import windImg from "../assets/weather-icons/wind_icon.png";
 
 export default class Day {
+  hours = [];
   static icons = {
     temperature: termometerImg,
     humidity: humidityImg,
@@ -19,6 +20,7 @@ export default class Day {
       average: dayReport.temperature.average,
       min: dayReport.temperature.min,
       max: dayReport.temperature.max,
+      feelslike: dayReport.temperature.feelslike,
     };
     this.humidity = dayReport.humidity;
     this.condition = dayReport.condition;
@@ -33,10 +35,11 @@ export default class Day {
     this.condition = dayReport.condition;
     this.icon = dayReport.icon;
     this.precipitationChance = dayReport.precipitation;
+    this.uvIndex = dayReport.uvIndex;
 
     // this.tide = tide;
   }
-  static async load() {}
+
   toString() {
     return {
       location: this.location,
