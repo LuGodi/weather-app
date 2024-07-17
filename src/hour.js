@@ -1,3 +1,4 @@
+import { format, parse } from "date-fns";
 export default class Hour {
   constructor(hour, hourReport) {
     this.condition = hourReport.condition;
@@ -8,7 +9,9 @@ export default class Hour {
     this.icon = hourReport.icon;
     this.precipitation = hourReport.precipitation;
     this.wind = hourReport.wind;
-    this.hour = hour;
+    console.log(hour);
+    console.log(typeof hour);
+    this.hour = format(parse(hour, "HH:mm:ss", new Date()), "HH:mm");
   }
   list(func) {
     for (const [key, value] of Object.entries(this)) {

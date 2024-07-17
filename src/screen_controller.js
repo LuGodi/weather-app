@@ -28,7 +28,13 @@ export default class ScreenController {
     const date = this.#renderDayDateInfo(day);
     const topElement = this.#renderDayTopInfo(day);
     const midElement = this.#renderDayAdditionalInfo(day);
-    this.cachedDom.mainEl.replaceChildren(date, topElement, midElement);
+    const hourChart = this.renderHoursChart(day);
+    this.cachedDom.mainEl.replaceChildren(
+      date,
+      topElement,
+      midElement,
+      hourChart
+    );
   }
   static #renderDayTopInfo(day) {
     const topEl = document.createElement("div");
@@ -37,16 +43,19 @@ export default class ScreenController {
     const temperatureContainer = this.#renderTemperatureInfo(day);
     const weatherDescription = document.createElement("span");
     const iconEl = document.createElement("span");
+    const icon = document.createElement("img");
     iconEl.classList.add("icon-container");
     topEl.classList.add("weather-top");
     locationEl.classList.add("location-container");
     feelsLikeEl.classList.add("feelslike-container");
     weatherDescription.classList.add("weather-description");
-    iconEl.textContent = day.icon;
+    // iconEl.textContent = day.icon;
+    icon.src = this.conditionIcons[day.icon + ".png"];
     locationEl.textContent = day.location;
     feelsLikeEl.textContent = `Feels like ${day.temperature.feelslike}`;
     feelsLikeEl.dataset.scale = this.scale.temperature;
     weatherDescription.textContent = day.description;
+    iconEl.append(icon);
     locationEl.append(iconEl);
     topEl.append(
       locationEl,
@@ -129,10 +138,35 @@ export default class ScreenController {
   static renderHoursChart(day) {
     const mainContainer = document.createElement("div");
     mainContainer.classList.add("hours-chart");
-
-    day.listHours((key, value, hourinstance) => {
-      const hourValue = document.createElement("span");
-      const iconWeather = document.createElement("img");
+    const hourElements = [];
+    day.listHours((hourInstance) => {
+      const hourEl = this.#renderHour(hourInstance);
+      hourElements.push(hourEl);
     });
+    mainContainer.append(...hourElements);
+    return mainContainer;
+  }
+  //i can refactor this to make it use hour.list
+  static #renderHour(hour) {
+    const hourContainer = document.createElement("div");
+    const hourValue = document.createElement("span");
+    const iconWeather = document.createElement("img");
+    const temperature = document.createElement("span");
+    const wind = document.createElement("span");
+    const precipitationProb = document.createElement("span");
+    hourContainer.classList.add("hour-information");
+    hourValue.textContent = hour.hour;
+    iconWeather.src = this.conditionIcons[hour.icon + ".png"];
+    temperature.textContent = hour.temperature.average;
+    wind.textContent = hour.wind;
+    precipitationProb.textContent = hour.precipitation;
+    hourContainer.append(
+      hourValue,
+      temperature,
+      iconWeather,
+      wind,
+      precipitationProb
+    );
+    return hourContainer;
   }
 }
