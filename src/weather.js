@@ -3,19 +3,19 @@ import Hour from "./hour.js";
 export default class Weather {
   static scale = {
     metric: {
-      temperature: "celsius",
+      temperature: "c",
       wind: "km",
-      precipitation: "%",
+      precipitationChance: "%",
       humidity: "%",
     },
     us: {
-      temperature: "fahrenheit",
+      temperature: "f",
       wind: "miles",
       precipitationChance: "%",
       humidity: "%",
     },
     uk: {
-      temperature: "celsius",
+      temperature: "c",
       wind: "miles",
       precipitationChance: "%",
       humidity: "%",

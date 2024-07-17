@@ -101,6 +101,7 @@ export default class ScreenController {
     const title = document.createElement("span");
     const value = document.createElement("span");
     container.classList.add("additional-container");
+    container.classList.add(`${attribute}-container`);
     title.classList.add(`${attribute}-span`);
     title.textContent = renderUtil.splitOnUpperCase(attribute);
     title.dataset.icon = `${attribute}_icon`;
@@ -158,8 +159,11 @@ export default class ScreenController {
     hourValue.textContent = hour.hour;
     iconWeather.src = this.conditionIcons[hour.icon + ".png"];
     temperature.textContent = hour.temperature.average;
+    temperature.dataset.scale = this.scale["temperature"];
     wind.textContent = hour.wind;
+    wind.dataset.scale = this.scale["wind"];
     precipitationProb.textContent = hour.precipitation;
+    precipitationProb.dataset.scale = this.scale["precipitationChance"];
     hourContainer.append(
       hourValue,
       temperature,
