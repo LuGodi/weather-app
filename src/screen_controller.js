@@ -20,6 +20,7 @@ export default class ScreenController {
   static #renderDayDateInfo(day) {
     const divEl = document.createElement("div");
     divEl.textContent = day.datetime;
+    console.log(renderUtil.isNight(day));
     return divEl;
   }
 

@@ -4,6 +4,8 @@
   font-family: sans-serif;
   --lighter-color: #1f2937;
   --darker-color: #111827;
+  --day-color: linear-gradient(#4fbeff, var(--darker-color));
+  --night-color: linear-gradient(black, var(--darker-color));
   box-sizing: border-box;
 }
 
@@ -157,13 +159,15 @@ span[data-scale]::after {
 }
 
 .hours-chart {
-  display: flex;
-  font-size: 0.5rem;
-  gap: 10px;
+  display: grid;
+  font-size: 0.8rem;
+  column-gap: 10px;
+  row-gap: 30px;
+  grid-template-columns: repeat(12, 1fr);
 }
 .hours-chart img {
-  width: 16px;
-  height: 16px;
+  width: 32px;
+  height: 32px;
 }
 
 .hour-information {
@@ -174,6 +178,6 @@ span[data-scale]::after {
   flex-basis: 20%;
 }
 .hour-information span:first-child {
-  font-size: 0.6rem;
+  font-size: 0.9rem;
   font-weight: bolder;
 }
