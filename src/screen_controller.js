@@ -6,6 +6,8 @@ export default class ScreenController {
   static scale = Weather.scale[Weather.activeScale];
   static cachedDom = {
     mainEl: document.querySelector(".main"),
+    body: document.querySelector("body"),
+    root: document.documentElement,
   };
   static conditionIcons = renderUtil.importedConditionIcons();
   static renderSearchInput() {
@@ -20,8 +22,14 @@ export default class ScreenController {
   static #renderDayDateInfo(day) {
     const divEl = document.createElement("div");
     divEl.textContent = day.datetime;
-    console.log(renderUtil.isNight(day));
     return divEl;
+  }
+  static #setBackgroundColor(isNightFun) {
+    if (isNightFun) {
+      this.cachedDom.root.style.background = "var(--night-color)";
+    } else {
+      this.cachedDom.root.style.background = "var(--day-color)";
+    }
   }
 
   //TODO Separate this in more functions, this should be for the top part only
@@ -30,6 +38,7 @@ export default class ScreenController {
     const topElement = this.#renderDayTopInfo(day);
     const midElement = this.#renderDayAdditionalInfo(day);
     const hourChart = this.renderHoursChart(day);
+    this.#setBackgroundColor(renderUtil.isNight(day));
     this.cachedDom.mainEl.replaceChildren(
       date,
       topElement,

@@ -1,5 +1,4 @@
 :root {
-  background-color: var(--darker-color);
   color: white;
   font-family: sans-serif;
   --lighter-color: #1f2937;
@@ -13,7 +12,7 @@ body {
   display: grid;
   place-items: center;
   align-items: start;
-  height: 80vh;
+  min-height: 80vh;
 }
 .main {
   font-size: 1rem;
