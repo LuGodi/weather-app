@@ -16,6 +16,7 @@ import Weather from "./weather.js";
 // Weather.processDays(weatherInfo.forecast, weatherInfo.location);
 ScreenController.init();
 Weather.init("rio de janeiro").then(() => {
-  ScreenController.renderDay(Weather.days[0], Weather.currentDay);
-  ScreenController.renderNextDays(Weather.days);
+  ScreenController.render(Weather.days, Weather.currentDay);
+  // ScreenController.renderDay(Weather.days[0], Weather.currentDay);
+  // ScreenController.renderNextDays(Weather.days);
 });

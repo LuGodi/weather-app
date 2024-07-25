@@ -55,8 +55,7 @@ form fieldset span {
   margin-top: 10px;
 }
 ::backdrop {
-  background-color: black;
-  opacity: 0.5;
+  backdrop-filter: blur(5px);
 }
 
 .search-container button {

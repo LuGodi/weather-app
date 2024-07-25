@@ -1,5 +1,6 @@
 import Weather from "./weather";
 import renderUtil from "./render_util";
+import FormController from "./form_controller";
 
 export default class ScreenController {
   //theres most certainly a better way
@@ -8,48 +9,55 @@ export default class ScreenController {
     mainEl: document.querySelector(".main"),
     body: document.querySelector("body"),
     root: document.documentElement,
-    hamburgerButton: document.querySelector(".hamburger-menu-button"),
+    hamburgerIcon: document.querySelector(".hamburger-menu-button"),
+
+    modal: this.#renderModal(),
   };
   static conditionIcons = renderUtil.importedConditionIcons();
   static init() {
-    const hamburgerMenu = this.renderModal();
-    this.cachedDom.hamburgerButton.addEventListener("click", (event) =>
-      hamburgerMenu.showModal()
+    this.cachedDom.body.append(this.cachedDom.modal);
+    this.cachedDom.hamburgerIcon.addEventListener("click", () =>
+      this.cachedDom.modal.showModal()
     );
-    console.log("render init");
   }
-  static renderModal() {
+
+  static #renderModal() {
     const dialog = document.createElement("dialog");
     const form = document.createElement("form");
     const closeButton = document.createElement("button");
+    const searchContainer = this.#renderSearchInput();
+    const scaleFieldset = this.#renderScaleFieldset(Weather.scale);
     closeButton.setAttribute("formmethod", "dialog");
-    const searchContainer = this.renderSearchInput();
-    const scaleFieldset = this.renderScaleFieldset(Weather.scale);
+    closeButton.setAttribute("value", "closeDialog");
+    closeButton.classList.add("close-button");
+    closeButton.textContent = "x";
+
+    form.setAttribute("method", "dialog");
     form.append(closeButton, searchContainer, scaleFieldset);
     dialog.append(form);
-    closeButton.textContent = "x";
-    closeButton.classList.add("close-button");
+    dialog.addEventListener("close", FormController.modalListener);
 
-    this.cachedDom.body.append(dialog);
     return dialog;
   }
-  static renderSearchInput() {
+  static #dialogEventHandler(event) {}
+  static #renderSearchInput() {
     const searchContainer = document.createElement("div");
     const searchInput = document.createElement("input");
     const label = document.createElement("label");
     label.textContent = "Desired Location: ";
     searchInput.id = "search-input";
+    searchInput.name = "location";
     searchInput.type = "search";
     label.setAttribute("for", searchInput.id);
 
     const searchButton = document.createElement("button");
-    searchButton.value = "Go";
+    searchButton.value = "loadData";
 
     searchContainer.classList.add("search-container");
     searchContainer.append(label, searchInput, searchButton);
     return searchContainer;
   }
-  static renderScaleFieldset(scaleObject) {
+  static #renderScaleFieldset(scaleObject) {
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
     legend.textContent = "Choose a scale: ";
@@ -63,6 +71,7 @@ export default class ScreenController {
       input.value = scale;
       input.name = "scale";
       input.id = `${scale}-scale`;
+      if (input.value === "metric") input.checked = true;
       label.setAttribute("for", input.id);
       label.textContent = `${scale} : ${scaleObject[scale].temperature}/${scaleObject[scale].wind}`;
       span.append(input, label);
@@ -87,18 +96,28 @@ export default class ScreenController {
 
   //TODO Separate this in more functions, this should be for the top part only
   //Main Day
+  static render(days, currentConditions) {
+    const firstDay = days[0];
+    const firstDayInformation = this.renderDay(firstDay, currentConditions);
+    const nextDaysInformation = this.renderNextDays(days);
+    this.cachedDom.mainEl.replaceChildren(
+      ...firstDayInformation,
+      nextDaysInformation
+    );
+  }
   static renderDay(day, currentConditions) {
     const date = this.#renderDayDateInfo(day);
     const topElement = this.#renderDayTopInfo(day, currentConditions);
     const midElement = this.#renderDayAdditionalInfo(day);
     const hourChart = this.renderHoursChart(day);
     this.#setBackgroundColor(renderUtil.isNight(day));
-    this.cachedDom.mainEl.replaceChildren(
-      date,
-      topElement,
-      midElement,
-      hourChart
-    );
+    // this.cachedDom.mainEl.replaceChildren(
+    //   date,
+    //   topElement,
+    //   midElement,
+    //   hourChart
+    // );
+    return [date, topElement, midElement, hourChart];
   }
   static #renderDayTopInfo(day, currentConditions) {
     console.log(currentConditions);
@@ -247,7 +266,7 @@ export default class ScreenController {
       dayEl.push(this.#renderNextDay(day));
     }
     container.append(...dayEl);
-    this.cachedDom.mainEl.append(container);
+    // this.cachedDom.mainEl.append(container);
     return container;
   }
 
