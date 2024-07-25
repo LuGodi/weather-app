@@ -57,6 +57,14 @@ export default class Day {
       func(weatherProperty, value, this);
     }
   }
+  listOnly(func, propertyArray) {
+    for (const [weatherProperty, value] of Object.entries(this)) {
+      if (propertyArray.includes(weatherProperty)) {
+        func(weatherProperty, value, this);
+      }
+    }
+  }
+
   listHours(func) {
     this.hours.forEach((hour) => {
       func(hour);

@@ -9,8 +9,7 @@ export default class Hour {
     this.icon = hourReport.icon;
     this.precipitation = hourReport.precipitation;
     this.wind = hourReport.wind;
-    console.log(hour);
-    console.log(typeof hour);
+
     this.hour = format(parse(hour, "HH:mm:ss", new Date()), "HH:mm");
   }
   list(func) {

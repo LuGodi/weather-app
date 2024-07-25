@@ -22,6 +22,7 @@ export default class Weather {
     },
   };
   static activeScale = "metric";
+  static currentDay = null;
   static days = [];
   static weatherReport = {
     location: null,
@@ -53,6 +54,7 @@ export default class Weather {
         console.log(processedDays);
         console.log("omg here should work");
         this.days.forEach((day) => console.log("hi this is a day", day));
+
         return;
       })
       .catch((e) => console.log(e));
@@ -86,6 +88,7 @@ export default class Weather {
     const weatherReport = {
       location: weatherData.resolvedAddress,
       days: weatherData.days,
+      currentConditions: weatherData.currentConditions,
     };
 
     return weatherReport;
@@ -93,7 +96,7 @@ export default class Weather {
   //TODO maybe move this to days instead of here?
   //actually this should process days, by giving it to days to destructure it makes coupling worse
   static processDays(processedWeather) {
-    const { days, location } = processedWeather;
+    const { days, location, currentConditions } = processedWeather;
 
     days.forEach((day) => {
       const dayReport = this.#processDay(day);
@@ -109,7 +112,9 @@ export default class Weather {
 
       this.days.push(dayInstance);
     });
-
+    const currentDay = this.#processDay(currentConditions);
+    this.currentDay = new Day(currentDay, location);
+    console.log(this.currentDay);
     return this.days;
   }
   static #processDay(day) {

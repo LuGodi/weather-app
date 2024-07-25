@@ -5,6 +5,7 @@
   --darker-color: #111827;
   --day-color: linear-gradient(#4fbeff, var(--darker-color));
   --night-color: linear-gradient(black, var(--darker-color));
+  --hamburger-color: #4261a6;
   box-sizing: border-box;
 }
 
@@ -14,6 +15,11 @@ body {
   align-items: start;
   min-height: 80vh;
 }
+dialog {
+  height: 100vh;
+  margin: 0;
+  background-color: var(--hamburger-color);
+}
 .main {
   font-size: 1rem;
 
@@ -21,12 +27,49 @@ body {
   max-width: min-content;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+form .close-button {
+  margin-left: auto;
+  width: fit-content;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid var(--lighter-color);
+  position: relative;
+  top: -10px;
+  right: -10px;
+}
+form fieldset {
+  border-radius: 8px;
+  border: 1px solid white;
+}
+.search-container label {
+  display: block;
+}
+form fieldset span {
+  display: block;
+  text-transform: capitalize;
+  margin-top: 10px;
+}
+::backdrop {
+  background-color: black;
+  opacity: 0.5;
+}
+
+.search-container button {
+  height: 2rem;
+  width: 20px;
+}
 .search-container input {
   height: 2rem;
   width: 300px;
   border-radius: 8px;
   outline: none;
   border: 1px solid white;
+  border: 1px solid var(--lighter-color);
 }
 
 .main > div {

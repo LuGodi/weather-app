@@ -8,15 +8,68 @@ export default class ScreenController {
     mainEl: document.querySelector(".main"),
     body: document.querySelector("body"),
     root: document.documentElement,
+    hamburgerButton: document.querySelector(".hamburger-menu-button"),
   };
   static conditionIcons = renderUtil.importedConditionIcons();
+  static init() {
+    const hamburgerMenu = this.renderModal();
+    this.cachedDom.hamburgerButton.addEventListener("click", (event) =>
+      hamburgerMenu.showModal()
+    );
+    console.log("render init");
+  }
+  static renderModal() {
+    const dialog = document.createElement("dialog");
+    const form = document.createElement("form");
+    const closeButton = document.createElement("button");
+    closeButton.setAttribute("formmethod", "dialog");
+    const searchContainer = this.renderSearchInput();
+    const scaleFieldset = this.renderScaleFieldset(Weather.scale);
+    form.append(closeButton, searchContainer, scaleFieldset);
+    dialog.append(form);
+    closeButton.textContent = "x";
+    closeButton.classList.add("close-button");
+
+    this.cachedDom.body.append(dialog);
+    return dialog;
+  }
   static renderSearchInput() {
     const searchContainer = document.createElement("div");
+    const searchInput = document.createElement("input");
+    const label = document.createElement("label");
+    label.textContent = "Desired Location: ";
+    searchInput.id = "search-input";
+    searchInput.type = "search";
+    label.setAttribute("for", searchInput.id);
+
+    const searchButton = document.createElement("button");
+    searchButton.value = "Go";
+
     searchContainer.classList.add("search-container");
-    const inputSearch = document.createElement("input");
-    inputSearch.type = "search";
-    searchContainer.append(inputSearch);
+    searchContainer.append(label, searchInput, searchButton);
     return searchContainer;
+  }
+  static renderScaleFieldset(scaleObject) {
+    const fieldset = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = "Choose a scale: ";
+
+    const radios = [];
+    for (const scale of Object.keys(scaleObject)) {
+      const span = document.createElement("span");
+      const input = document.createElement("input");
+      const label = document.createElement("label");
+      input.type = "radio";
+      input.value = scale;
+      input.name = "scale";
+      input.id = `${scale}-scale`;
+      label.setAttribute("for", input.id);
+      label.textContent = `${scale} : ${scaleObject[scale].temperature}/${scaleObject[scale].wind}`;
+      span.append(input, label);
+      radios.push(span);
+    }
+    fieldset.append(legend, ...radios);
+    return fieldset;
   }
   //TODO add date fns for proper date display
   static #renderDayDateInfo(day) {
@@ -33,9 +86,10 @@ export default class ScreenController {
   }
 
   //TODO Separate this in more functions, this should be for the top part only
-  static renderDay(day) {
+  //Main Day
+  static renderDay(day, currentConditions) {
     const date = this.#renderDayDateInfo(day);
-    const topElement = this.#renderDayTopInfo(day);
+    const topElement = this.#renderDayTopInfo(day, currentConditions);
     const midElement = this.#renderDayAdditionalInfo(day);
     const hourChart = this.renderHoursChart(day);
     this.#setBackgroundColor(renderUtil.isNight(day));
@@ -46,7 +100,8 @@ export default class ScreenController {
       hourChart
     );
   }
-  static #renderDayTopInfo(day) {
+  static #renderDayTopInfo(day, currentConditions) {
+    console.log(currentConditions);
     const topEl = document.createElement("div");
     const locationEl = document.createElement("span");
     const feelsLikeEl = document.createElement("span");
@@ -60,9 +115,9 @@ export default class ScreenController {
     feelsLikeEl.classList.add("feelslike-container");
     weatherDescription.classList.add("weather-description");
     // iconEl.textContent = day.icon;
-    icon.src = this.conditionIcons[day.icon + ".png"];
+    icon.src = this.conditionIcons[currentConditions.icon + ".png"];
     locationEl.textContent = day.location;
-    feelsLikeEl.textContent = `Feels like ${day.temperature.feelslike}`;
+    feelsLikeEl.textContent = `Feels like ${currentConditions.temperature.feelslike}`;
     feelsLikeEl.dataset.scale = this.scale.temperature;
     weatherDescription.textContent = day.description;
     iconEl.append(icon);
@@ -182,5 +237,36 @@ export default class ScreenController {
       precipitationProb
     );
     return hourContainer;
+  }
+
+  //additional days
+  static renderNextDays(daysArr) {
+    const container = document.createElement("div");
+    const dayEl = [];
+    for (const day of daysArr) {
+      dayEl.push(this.#renderNextDay(day));
+    }
+    container.append(...dayEl);
+    this.cachedDom.mainEl.append(container);
+    return container;
+  }
+
+  static #renderNextDay(day) {
+    const holder = document.createElement("div");
+    const date = document.createElement("span");
+    const dayInfo = document.createElement("div");
+    const dayInfoArr = [];
+    day.listOnly(
+      (weatherProperty, value, instance) => {
+        const element = this.#additionalInfoContainer(day, weatherProperty);
+        dayInfoArr.push(element);
+      },
+      ["icon", "precipitationChance", "temperature"]
+    );
+    date.textContent = day.datetime;
+    dayInfo.append(...dayInfoArr);
+    holder.append(date, dayInfo);
+
+    return holder;
   }
 }

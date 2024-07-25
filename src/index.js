@@ -14,15 +14,8 @@ import Weather from "./weather.js";
 //   weatherData.forecastData
 // );
 // Weather.processDays(weatherInfo.forecast, weatherInfo.location);
-
+ScreenController.init();
 Weather.init("rio de janeiro").then(() => {
-  Weather.days.forEach((day) => {
-    // console.log(day);
-    console.log(day);
-    day.listHours((hourInstance) => {
-      console.log("listing hours");
-      console.log(hourInstance);
-    });
-    ScreenController.renderDay(day);
-  });
+  ScreenController.renderDay(Weather.days[0], Weather.currentDay);
+  ScreenController.renderNextDays(Weather.days);
 });
