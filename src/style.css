@@ -15,6 +15,12 @@ body {
   align-items: start;
   min-height: 80vh;
 }
+body:has(.home) {
+  background-color: black;
+}
+.home {
+  font-size: 3rem;
+}
 dialog {
   height: 100vh;
   margin: 0;
@@ -23,10 +29,13 @@ dialog {
 .main {
   font-size: 1rem;
 
-  background-color: var(--lighter-color);
+  /* background-color: var(--lighter-color); */
   max-width: min-content;
 }
-
+.date-container {
+  display: flex;
+  flex-direction: column;
+}
 form {
   display: flex;
   flex-direction: column;
@@ -41,6 +50,10 @@ form .close-button {
   position: relative;
   top: -10px;
   right: -10px;
+}
+form #load-data-button {
+  vertical-align: bottom;
+  margin-left: 20px;
 }
 form fieldset {
   border-radius: 8px;

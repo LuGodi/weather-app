@@ -43,6 +43,7 @@ export default class Weather {
   static async init(location, unitGroup = this.activeScale) {
     // const weatherData = await this.load(location);
     // this.
+    this.activeScale = unitGroup;
     await this.load(location, unitGroup)
       .then((data) => {
         return this.processData(data);
@@ -97,6 +98,7 @@ export default class Weather {
   //actually this should process days, by giving it to days to destructure it makes coupling worse
   static processDays(processedWeather) {
     const { days, location, currentConditions } = processedWeather;
+    this.days = [];
 
     days.forEach((day) => {
       const dayReport = this.#processDay(day);

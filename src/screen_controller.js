@@ -1,10 +1,11 @@
 import Weather from "./weather";
 import renderUtil from "./render_util";
 import FormController from "./form_controller";
+import { format } from "date-fns";
 
 export default class ScreenController {
   //theres most certainly a better way
-  static scale = Weather.scale[Weather.activeScale];
+  static scale;
   static cachedDom = {
     mainEl: document.querySelector(".main"),
     body: document.querySelector("body"),
@@ -15,12 +16,33 @@ export default class ScreenController {
   };
   static conditionIcons = renderUtil.importedConditionIcons();
   static init() {
+    console.log(this.cachedDom.modal);
+    const home = this.renderHome();
     this.cachedDom.body.append(this.cachedDom.modal);
+    this.cachedDom.mainEl.append(home);
     this.cachedDom.hamburgerIcon.addEventListener("click", () =>
       this.cachedDom.modal.showModal()
     );
+    this.cachedDom.modal.showModal();
   }
-
+  static renderHome() {
+    const logo = document.createElement("div");
+    logo.classList.add("home");
+    logo.textContent = "Weatherite";
+    logo.classList.add("logo");
+    return logo;
+  }
+  //Main Day
+  static render(days, currentConditions) {
+    this.scale = Weather.scale[Weather.activeScale];
+    const firstDay = days[0];
+    const firstDayInformation = this.renderDay(firstDay, currentConditions);
+    const nextDaysInformation = this.renderNextDays(days);
+    this.cachedDom.mainEl.replaceChildren(
+      ...firstDayInformation,
+      nextDaysInformation
+    );
+  }
   static #renderModal() {
     const dialog = document.createElement("dialog");
     const form = document.createElement("form");
@@ -39,7 +61,6 @@ export default class ScreenController {
 
     return dialog;
   }
-  static #dialogEventHandler(event) {}
   static #renderSearchInput() {
     const searchContainer = document.createElement("div");
     const searchInput = document.createElement("input");
@@ -48,10 +69,12 @@ export default class ScreenController {
     searchInput.id = "search-input";
     searchInput.name = "location";
     searchInput.type = "search";
+
     label.setAttribute("for", searchInput.id);
 
     const searchButton = document.createElement("button");
     searchButton.value = "loadData";
+    searchButton.id = "load-data-button";
 
     searchContainer.classList.add("search-container");
     searchContainer.append(label, searchInput, searchButton);
@@ -81,9 +104,14 @@ export default class ScreenController {
     return fieldset;
   }
   //TODO add date fns for proper date display
-  static #renderDayDateInfo(day) {
+  static #renderDayDateInfo(day, currentConditions) {
     const divEl = document.createElement("div");
-    divEl.textContent = day.datetime;
+    const dateSpan = document.createElement("span");
+    const span = document.createElement("span");
+    dateSpan.textContent = format(day.datetime, "dd/MM/yyyy");
+    span.textContent = `Updated at ${currentConditions.datetime}`;
+    divEl.classList.add("date-container");
+    divEl.append(dateSpan, span);
     return divEl;
   }
   static #setBackgroundColor(isNightFun) {
@@ -95,18 +123,9 @@ export default class ScreenController {
   }
 
   //TODO Separate this in more functions, this should be for the top part only
-  //Main Day
-  static render(days, currentConditions) {
-    const firstDay = days[0];
-    const firstDayInformation = this.renderDay(firstDay, currentConditions);
-    const nextDaysInformation = this.renderNextDays(days);
-    this.cachedDom.mainEl.replaceChildren(
-      ...firstDayInformation,
-      nextDaysInformation
-    );
-  }
+
   static renderDay(day, currentConditions) {
-    const date = this.#renderDayDateInfo(day);
+    const date = this.#renderDayDateInfo(day, currentConditions);
     const topElement = this.#renderDayTopInfo(day, currentConditions);
     const midElement = this.#renderDayAdditionalInfo(day);
     const hourChart = this.renderHoursChart(day);
