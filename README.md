@@ -10,12 +10,12 @@ separar os estilos pra cada modulo ao inves de ser um so
 - Render hours:
   - [ ]implement scroll behavior on click for hours
   - [x] Fix hours not showing scale (FIXED)
-- [ ]Render additional days - IN PROGRESS
+- [x]Render additional days - (DONE)
 - [x] make app color match the sunrise/sunset (DONE)
 - [ ]Get icons for close and submit (input img or svg)
 - [x]Blur backdrop
 - [x]Get icons for the weather(DONE)
-  - [ ]Make the ones for sunrise/sunset
+  - [ ]Make the ones for sunrise/sunset/rain chance
 - [x]~ Replace additional info to be a grid instead of flex ~ (DONE)
 - Refactor Screen controller:
 
