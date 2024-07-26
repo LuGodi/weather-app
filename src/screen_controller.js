@@ -1,7 +1,7 @@
 import Weather from "./weather";
 import renderUtil from "./render_util";
 import FormController from "./form_controller";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 export default class ScreenController {
   //theres most certainly a better way
@@ -115,7 +115,7 @@ export default class ScreenController {
     const divEl = document.createElement("div");
     const dateSpan = document.createElement("span");
     const span = document.createElement("span");
-    dateSpan.textContent = format(day.datetime, "dd/MM/yyyy");
+    dateSpan.textContent = format(parseISO(day.datetime), "dd/MM/yyyy");
     span.textContent = `Updated at ${currentConditions.datetime}`;
     divEl.classList.add("date-container");
     divEl.append(dateSpan, span);
@@ -291,6 +291,7 @@ export default class ScreenController {
     for (const day of daysArr) {
       dayEl.push(this.#renderNextDay(day));
     }
+    container.classList.add("next-days-container");
     container.append(...dayEl);
     // this.cachedDom.mainEl.append(container);
     return container;
@@ -298,20 +299,43 @@ export default class ScreenController {
 
   static #renderNextDay(day) {
     const holder = document.createElement("div");
-    const date = document.createElement("span");
-    const dayInfo = document.createElement("div");
-    const dayInfoArr = [];
-    day.listOnly(
-      (weatherProperty, value, instance) => {
-        const element = this.#additionalInfoContainer(day, weatherProperty);
-        dayInfoArr.push(element);
-      },
-      ["icon", "precipitationChance", "temperature"]
+    const leftContainer = document.createElement("div");
+    const rightContainer = document.createElement("div");
+    const temperatureContainer = this.#renderTemperatureInfo(day);
+    const rainChance = this.#additionalInfoContainer(
+      day,
+      "precipitationChance"
     );
-    date.textContent = day.datetime;
-    dayInfo.append(...dayInfoArr);
-    holder.append(date, dayInfo);
+    const moon = this.#additionalInfoContainer(day, "moon");
+    const date = document.createElement("span");
+    const weekDay = document.createElement("p");
+    const icon = this.#renderWeatherIcon(day.icon);
+
+    date.classList.add("date");
+    weekDay.classList.add("day-of-the-week");
+    moon.classList.add("moon");
+    rainChance.classList.add("precipitation");
+    holder.classList.add("next-day-container");
+    rightContainer.classList.add("next-days-right-container");
+    leftContainer.classList.add("next-days-left-container");
+
+    date.textContent = format(parseISO(day.datetime), "dd/MM/yyyy"); //TODO FORMAT RELATIVE
+    weekDay.textContent = format(parseISO(day.datetime), "EEEE");
+
+    leftContainer.append(weekDay, icon);
+    rightContainer.append(temperatureContainer, rainChance, moon);
+
+    holder.append(date, weekDay, icon, temperatureContainer, rainChance, moon);
 
     return holder;
+  }
+
+  static #renderWeatherIcon(iconName) {
+    const div = document.createElement("div");
+    div.classList.add("icon-container");
+    const icon = document.createElement("img");
+    icon.src = this.conditionIcons[iconName + ".png"];
+    div.append(icon);
+    return div;
   }
 }

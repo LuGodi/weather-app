@@ -1,4 +1,4 @@
-import { parse, isAfter, isBefore } from "date-fns";
+import { parse, isAfter, isBefore, parseISO } from "date-fns";
 export default class renderUtil {
   static splitOnUpperCase(string) {
     const regex = /(\w)([A-Z])/g;
@@ -31,5 +31,9 @@ export default class renderUtil {
     return this.#importAll(
       require.context("../assets/condition-icons", false, /\.png$/)
     );
+  }
+  static parseDate(loadedDateStr) {
+    const parsed = parseISO(loadedDateStr);
+    return parsed;
   }
 }

@@ -2,6 +2,7 @@
   color: white;
   font-family: sans-serif;
   --lighter-color: #1f2937;
+  --lighter-color-less-opacity: #1f29374b;
   --darker-color: #111827;
   --day-color: linear-gradient(#4fbeff, var(--darker-color));
   --night-color: linear-gradient(black, var(--darker-color));
@@ -104,6 +105,7 @@ form fieldset span {
   align-self: flex-start;
   display: flex;
   flex-direction: column;
+  max-width: 60%;
 }
 span.feelslike-container,
 span.weather-description {
@@ -178,7 +180,7 @@ span[data-scale]::after {
 .sunrise-container {
   grid-area: sunrise;
 }
-.weather-mid .additional-container {
+.additional-container {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -186,7 +188,7 @@ span[data-scale]::after {
   padding: 5px 5px;
   white-space: nowrap;
 }
-.weather-mid .additional-container span[data-icon]::before {
+.additional-container span[data-icon]::before {
   content: " ";
 
   background-size: contain;
@@ -195,13 +197,13 @@ span[data-scale]::after {
   height: 30px;
   vertical-align: middle;
 }
-.weather-mid .additional-container span[data-icon="moon_icon"]::before {
+.additional-container span[data-icon="moon_icon"]::before {
   background-image: url("../assets/weather-icons/moon_icon.png");
 }
-.weather-mid .additional-container span[data-icon="humidity_icon"]::before {
+.additional-container span[data-icon="humidity_icon"]::before {
   background-image: url("../assets/weather-icons/humidity_icon.png");
 }
-.weather-mid .additional-container span[data-icon="wind_icon"]::before {
+.additional-container span[data-icon="wind_icon"]::before {
   background-image: url("../assets/weather-icons/wind_icon.png");
 }
 .additional-container > :first-child {
@@ -234,4 +236,58 @@ span[data-scale]::after {
 .hour-information span:first-child {
   font-size: 0.9rem;
   font-weight: bolder;
+}
+
+.next-days-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.next-day-container {
+  display: grid;
+  grid-template-areas:
+    "date date date"
+    "weekday moon temperature"
+    "icon . temperature"
+    "icon precipitation temperature";
+  grid-template-columns: repeat(3, 1fr);
+  padding-bottom: 3rem;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 20px;
+}
+.next-day-container:nth-child(even) {
+  background-color: var(--lighter-color-less-opacity);
+}
+
+.next-day-container .day-of-the-week {
+  grid-area: weekday;
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+}
+.next-day-container > * {
+  border: 0;
+}
+.next-day-container .date {
+  grid-area: date;
+  padding-bottom: 20px;
+}
+.next-day-container .moon {
+  grid-area: moon;
+}
+.next-day-container .precipitation {
+  grid-area: precipitation;
+}
+.next-day-container .temperature-info-container {
+  grid-area: temperature;
+  margin-left: auto;
+  * {
+    flex: 0;
+  }
+}
+.next-day-container .icon-container {
+  align-self: center;
+  grid-area: icon;
 }
