@@ -13,7 +13,7 @@ body {
   display: grid;
   place-items: center;
   align-items: start;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 body:has(.home) {
   background-color: black;

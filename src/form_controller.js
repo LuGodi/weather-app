@@ -1,5 +1,6 @@
 import Weather from "./weather";
 import App from "./index";
+import ScreenController from "./screen_Controller";
 export default class FormController {
   static modalListener(event) {
     const form = event.target.firstChild;
@@ -17,6 +18,8 @@ export default class FormController {
 
     // Weather.init(location, scale);
     this.closeDialog(form);
+    ScreenController.renderLoading();
+
     App.loadData(location, scale);
   }
   static closeDialog(form) {

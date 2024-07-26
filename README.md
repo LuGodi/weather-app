@@ -3,8 +3,8 @@ Todo:
 separar os estilos pra cada modulo ao inves de ser um so
 
 - [ ]implement search as a transitioning menu - IN PROGRESS
-- [ ]Implement toggle between metric, us, uk - IN PROGRESS
-- [ ]Handling form submission - IN PROGRESS
+- [x]Implement toggle between metric, us, uk - DONE
+- [x]Handling form submission - DONE
 - [x]Fix rendering to render the first day not the last
 - Render hours:
   - [ ]implement scroll behavior on click for hours
@@ -16,5 +16,8 @@ separar os estilos pra cada modulo ao inves de ser um so
 - [x]Get icons for the weather(DONE)
   - [ ]Make the ones for sunrise/sunset
 - [x]~ Replace additional info to be a grid instead of flex ~ (DONE)
-- Refactor Screen controller
+- Refactor Screen controller:
+
+  -[ ]Move the form rendering to the form controller
+
 - Consider graphs/chars

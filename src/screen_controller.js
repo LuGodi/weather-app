@@ -43,6 +43,13 @@ export default class ScreenController {
       nextDaysInformation
     );
   }
+  static renderLoading() {
+    const logo = this.renderHome();
+    const div = document.createElement("div");
+    div.textContent = "loading";
+    div.classList.add("loading-div");
+    this.cachedDom.mainEl.replaceChildren(logo, div);
+  }
   static #renderModal() {
     const dialog = document.createElement("dialog");
     const form = document.createElement("form");
@@ -116,9 +123,9 @@ export default class ScreenController {
   }
   static #setBackgroundColor(isNightFun) {
     if (isNightFun) {
-      this.cachedDom.root.style.background = "var(--night-color)";
+      this.cachedDom.body.style.background = "var(--night-color)";
     } else {
-      this.cachedDom.root.style.background = "var(--day-color)";
+      this.cachedDom.body.style.background = "var(--day-color)";
     }
   }
 
