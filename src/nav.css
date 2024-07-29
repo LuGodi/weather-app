@@ -1,14 +1,35 @@
-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
+:root {
+  --nav-width: 26px;
 }
 
+* {
+  box-sizing: border-box;
+}
+nav {
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  width: var(--nav-width);
+  background-color: var(--dialog-color);
+}
+.hamburger-menu-button {
+  width: 26px;
+  height: 26px;
+  padding: 3px 5px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid var(--lighter-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 dialog {
   height: 100vh;
+  max-height: 100vh;
   margin: 0;
   background-color: var(--dialog-color);
   animation: close-dialog 0.5s linear;
+  padding-right: 26px;
 }
 dialog[open] {
   animation: open-dialog 0.5s linear;
@@ -17,21 +38,25 @@ form {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-  position: relative;
+
   margin: 30px 10px;
 }
 form .close-button {
   font-size: 1rem;
-  margin-left: auto;
-  width: fit-content;
-  height: fit-content;
+  /* margin-left: auto; */
+  width: 26px;
+  height: 26px;
   background-color: transparent;
   outline: none;
   border: 1px solid var(--lighter-color);
-  /* position: absolute;
+  position: absolute;
   top: 0px;
-  right: 0px; */
+  right: 0px;
   padding: 3px 5px;
+}
+dialog:not([open]) .close-button {
+  animation: close-button-animation 0s linear;
+  display: none;
 }
 form #load-data-button {
   vertical-align: bottom;
@@ -85,7 +110,15 @@ form fieldset span {
     transform: translateX(0%);
   }
   to {
+    transform: translateX(-100%) translateX(var(--nav-width));
     display: none;
-    transform: translateX(-100%);
+  }
+}
+@keyframes close-button-animation {
+  from {
+    display: block;
+  }
+  to {
+    display: none;
   }
 }

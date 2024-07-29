@@ -6,7 +6,7 @@
   --darker-color: #111827;
   --day-color: linear-gradient(#4fbeff, var(--darker-color));
   --night-color: linear-gradient(black, var(--darker-color));
-  --dialog-color: #4262a690;
+  --dialog-color: #4262a6;
   box-sizing: border-box;
 }
 * {
@@ -14,9 +14,8 @@
   padding: 0px;
 }
 body {
-  display: grid;
-  place-items: center;
-  align-items: start;
+  display: flex;
+  justify-content: center;
   min-height: 100vh;
 }
 body:has(.home) {
@@ -28,6 +27,8 @@ body:has(.home) {
 
 .main {
   font-size: 1rem;
+  flex-grow: 1;
+  margin: auto;
 
   /* background-color: var(--lighter-color); */
   max-width: min-content;
