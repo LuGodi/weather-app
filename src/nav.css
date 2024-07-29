@@ -1,0 +1,91 @@
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+dialog {
+  height: 100vh;
+  margin: 0;
+  background-color: var(--dialog-color);
+  animation: close-dialog 0.5s linear;
+}
+dialog[open] {
+  animation: open-dialog 0.5s linear;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  position: relative;
+  margin: 30px 10px;
+}
+form .close-button {
+  font-size: 1rem;
+  margin-left: auto;
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid var(--lighter-color);
+  /* position: absolute;
+  top: 0px;
+  right: 0px; */
+  padding: 3px 5px;
+}
+form #load-data-button {
+  vertical-align: bottom;
+  margin-left: 20px;
+}
+form fieldset {
+  border-radius: 8px;
+  border: 1px solid white;
+}
+
+form fieldset span {
+  display: block;
+  text-transform: capitalize;
+  margin-top: 10px;
+}
+::backdrop {
+  backdrop-filter: blur(5px);
+}
+
+.search-container button {
+  height: 2rem;
+  width: 20px;
+}
+.search-container input {
+  height: 2rem;
+  width: 300px;
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid white;
+  border: 1px solid var(--lighter-color);
+}
+.search-container label {
+  display: block;
+}
+
+@keyframes open-dialog {
+  from {
+    transform: translateX(-100%);
+    display: none;
+  }
+
+  to {
+    transform: translateX(0%);
+    display: block;
+  }
+}
+
+@keyframes close-dialog {
+  from {
+    display: block;
+    transform: translateX(0%);
+  }
+  to {
+    display: none;
+    transform: translateX(-100%);
+  }
+}

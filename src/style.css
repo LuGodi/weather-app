@@ -6,10 +6,13 @@
   --darker-color: #111827;
   --day-color: linear-gradient(#4fbeff, var(--darker-color));
   --night-color: linear-gradient(black, var(--darker-color));
-  --hamburger-color: #4261a6;
+  --dialog-color: #4262a690;
   box-sizing: border-box;
 }
-
+* {
+  margin: 0px;
+  padding: 0px;
+}
 body {
   display: grid;
   place-items: center;
@@ -22,11 +25,7 @@ body:has(.home) {
 .home {
   font-size: 3rem;
 }
-dialog {
-  height: 100vh;
-  margin: 0;
-  background-color: var(--hamburger-color);
-}
+
 .main {
   font-size: 1rem;
 
@@ -36,53 +35,6 @@ dialog {
 .date-container {
   display: flex;
   flex-direction: column;
-}
-form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-}
-form .close-button {
-  margin-left: auto;
-  width: fit-content;
-  background-color: transparent;
-  outline: none;
-  border: 1px solid var(--lighter-color);
-  position: relative;
-  top: -10px;
-  right: -10px;
-}
-form #load-data-button {
-  vertical-align: bottom;
-  margin-left: 20px;
-}
-form fieldset {
-  border-radius: 8px;
-  border: 1px solid white;
-}
-.search-container label {
-  display: block;
-}
-form fieldset span {
-  display: block;
-  text-transform: capitalize;
-  margin-top: 10px;
-}
-::backdrop {
-  backdrop-filter: blur(5px);
-}
-
-.search-container button {
-  height: 2rem;
-  width: 20px;
-}
-.search-container input {
-  height: 2rem;
-  width: 300px;
-  border-radius: 8px;
-  outline: none;
-  border: 1px solid white;
-  border: 1px solid var(--lighter-color);
 }
 
 .main > div {
