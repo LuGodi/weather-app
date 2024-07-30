@@ -59,7 +59,7 @@ form #load-data-button {
   background-color: transparent;
   outline: none;
   border: none;
-
+  vertical-align: middle;
   cursor: pointer;
 }
 dialog:not([open]) .close-button {

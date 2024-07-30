@@ -37,7 +37,22 @@ body:has(.home) {
   display: flex;
   flex-direction: column;
 }
-
+.loading-icon {
+  animation: rotate-loading 1s infinite;
+}
+.loading-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes rotate-loading {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
 .main > div {
   margin: 20px 10px;
   padding-bottom: 20px;

@@ -29,6 +29,7 @@ export default class FormController {
     // Weather.init(location, scale);
     this.closeDialog(form);
     ScreenController.renderLoading();
+
     App.loadData(location, scale);
   }
   static closeDialog(form) {

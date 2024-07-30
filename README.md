@@ -2,6 +2,7 @@ Todo:
 
 separar os estilos pra cada modulo ao inves de ser um so
 
+- [x]Icon for loading
 - [x]implement search as a transitioning menu - DONE
 - [ ]Implement visible message(render) on bad request( for instance invalid location)
 - [x]Implement toggle between metric, us, uk - DONE
@@ -12,7 +13,7 @@ separar os estilos pra cada modulo ao inves de ser um so
   - [x] Fix hours not showing scale (FIXED)
 - [x]Render additional days - (DONE)
 - [x] make app color match the sunrise/sunset (DONE)
-- [ ]Get icons for close and submit (input img or svg)
+- [X]Get icons for close and submit (input img or svg) DONE
 - [x]Blur backdrop
 - [x]Get icons for the weather(DONE)
   - [ ]Make the ones for sunrise/sunset/rain chance
