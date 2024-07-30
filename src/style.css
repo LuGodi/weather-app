@@ -45,6 +45,14 @@ body:has(.home) {
   flex-direction: column;
   align-items: center;
 }
+.main:has(.error-div) {
+  max-width: fit-content;
+  text-align: center;
+}
+.error-div {
+  text-align: center;
+  width: fit-content;
+}
 @keyframes rotate-loading {
   from {
     transform: rotateZ(0deg);

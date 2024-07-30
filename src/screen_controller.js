@@ -2,7 +2,6 @@ import Weather from "./weather";
 import renderUtil from "./render_util";
 import FormController from "./form_controller";
 import { format, parseISO } from "date-fns";
-import LoadingIcon from "../assets/home-icons/progress.svg";
 
 export default class ScreenController {
   //theres most certainly a better way
@@ -43,17 +42,6 @@ export default class ScreenController {
       ...firstDayInformation,
       nextDaysInformation
     );
-  }
-  static renderLoading() {
-    const logo = this.renderHome();
-    const div = document.createElement("div");
-    const loadingIcon = document.createElement("img");
-    loadingIcon.classList.add("loading-icon");
-    loadingIcon.src = LoadingIcon;
-    div.textContent = "LOADING";
-    div.classList.add("loading-div");
-    div.append(loadingIcon);
-    this.cachedDom.mainEl.replaceChildren(logo, div);
   }
 
   //TODO add date fns for proper date display

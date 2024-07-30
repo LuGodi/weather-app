@@ -4,6 +4,8 @@ import "./nav.css";
 import MenuIcon from "../assets/home-icons/menu.svg";
 import SearchIcon from "../assets/home-icons/search.svg";
 import ScreenController from "./screen_Controller";
+import LoadingIcon from "../assets/home-icons/progress.svg";
+
 export default class FormController {
   //Change to private
   static modalListener(event) {
@@ -28,7 +30,7 @@ export default class FormController {
 
     // Weather.init(location, scale);
     this.closeDialog(form);
-    ScreenController.renderLoading();
+    this.#renderLoading();
 
     App.loadData(location, scale);
   }
@@ -61,6 +63,25 @@ export default class FormController {
 
     return dialog;
   }
+  static #renderLoading() {
+    const logo = ScreenController.renderHome();
+    const div = document.createElement("div");
+    const loadingIcon = document.createElement("img");
+    loadingIcon.classList.add("loading-icon");
+    loadingIcon.src = LoadingIcon;
+    div.textContent = "LOADING";
+    div.classList.add("loading-div");
+    div.append(loadingIcon);
+    ScreenController.cachedDom.mainEl.replaceChildren(logo, div);
+  }
+  static renderFailedToFetch(errorObj) {
+    const logo = ScreenController.renderHome();
+    const div = document.createElement("div");
+    div.classList.add("error-div");
+    div.innerText = `Failed to load information from ${errorObj.location}.\nAre you sure this is a valid place?\nStatus code : ${errorObj.code}`;
+    ScreenController.cachedDom.mainEl.replaceChildren(logo, div);
+  }
+
   static #renderSearchInput() {
     const searchContainer = document.createElement("div");
     const searchInput = document.createElement("input");

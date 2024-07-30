@@ -58,7 +58,9 @@ export default class Weather {
         return;
         // return;
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        throw new Error("", { cause: e.cause });
+      });
   }
 
   //https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/[location]/[date1]/[date2]?key=YOUR_API_KEY
@@ -72,13 +74,14 @@ export default class Weather {
     try {
       const response = await fetch(urlRequest);
       if (response.ok === false) {
-        throw new Error("failed to fetch");
+        console.log(response);
+        throw new Error("failed to fetch", { cause: response.status });
       }
       const jsonData = await response.json();
       console.log(jsonData);
       return jsonData;
     } catch (error) {
-      console.log(error);
+      throw new Error("faile in load function", { cause: error.cause });
     }
   }
 

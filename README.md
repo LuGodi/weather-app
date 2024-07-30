@@ -4,7 +4,7 @@ separar os estilos pra cada modulo ao inves de ser um so
 
 - [x]Icon for loading
 - [x]implement search as a transitioning menu - DONE
-- [ ]Implement visible message(render) on bad request( for instance invalid location)
+- [x]Implement visible message(render) on bad request( for instance invalid location)
 - [x]Implement toggle between metric, us, uk - DONE
 - [x]Handling form submission - DONE
 - [x]Fix rendering to render the first day not the last
