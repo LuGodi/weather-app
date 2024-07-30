@@ -1,13 +1,22 @@
 import Weather from "./weather";
 import App from "./index";
 import "./nav.css";
+import MenuIcon from "../assets/home-icons/menu.svg";
+import SearchIcon from "../assets/home-icons/search.svg";
 import ScreenController from "./screen_Controller";
 export default class FormController {
+  //Change to private
   static modalListener(event) {
-    const form = event.target.firstChild;
-    if (this.returnValue === "loadData" || this.returnValue === "closeDialog") {
-      console.log(this.returnValue);
-      FormController[this.returnValue](form);
+    const form = event.currentTarget;
+    console.log(event);
+    const pressed = event.target.parentElement;
+    console.log(pressed);
+    if (
+      pressed.tagName === "BUTTON" &&
+      (pressed.value === "loadData" || pressed.value === "closeDialog")
+    ) {
+      console.log(this);
+      FormController[pressed.value](form);
     }
   }
 
@@ -20,28 +29,34 @@ export default class FormController {
     // Weather.init(location, scale);
     this.closeDialog(form);
     ScreenController.renderLoading();
-
     App.loadData(location, scale);
   }
   static closeDialog(form) {
+    const dialog = form.parentElement;
     form.elements.location.value = "";
+    dialog.close();
   }
 
   static renderModal() {
     const dialog = document.createElement("dialog");
     const form = document.createElement("form");
     const closeButton = document.createElement("button");
+    const menuIcon = document.createElement("img");
+    const searchIcon = document.createElement("img");
     const searchContainer = this.#renderSearchInput();
     const scaleFieldset = this.#renderScaleFieldset(Weather.scale);
     closeButton.setAttribute("formmethod", "dialog");
     closeButton.setAttribute("value", "closeDialog");
     closeButton.classList.add("close-button");
-    closeButton.textContent = "x";
+    closeButton.setAttribute("type", "button");
+    menuIcon.src = MenuIcon;
+    closeButton.append(menuIcon);
 
     form.setAttribute("method", "dialog");
     form.append(closeButton, searchContainer, scaleFieldset);
     dialog.append(form);
-    dialog.addEventListener("close", FormController.modalListener);
+    // dialog.addEventListener("close", FormController.modalListener);
+    form.addEventListener("click", this.modalListener);
 
     return dialog;
   }
@@ -57,8 +72,11 @@ export default class FormController {
     label.setAttribute("for", searchInput.id);
 
     const searchButton = document.createElement("button");
+    const searchImg = document.createElement("img");
+    searchImg.src = SearchIcon;
     searchButton.value = "loadData";
     searchButton.id = "load-data-button";
+    searchButton.append(searchImg);
 
     searchContainer.classList.add("search-container");
     searchContainer.append(label, searchInput, searchButton);

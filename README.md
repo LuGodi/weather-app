@@ -2,7 +2,7 @@ Todo:
 
 separar os estilos pra cada modulo ao inves de ser um so
 
-- [ ]implement search as a transitioning menu - IN PROGRESS
+- [x]implement search as a transitioning menu - DONE
 - [ ]Implement visible message(render) on bad request( for instance invalid location)
 - [x]Implement toggle between metric, us, uk - DONE
 - [x]Handling form submission - DONE
@@ -19,6 +19,6 @@ separar os estilos pra cada modulo ao inves de ser um so
 - [x]~ Replace additional info to be a grid instead of flex ~ (DONE)
 - Refactor Screen controller:
 
-  -[ ]Move the form rendering to the form controller
+  -[x]Move the form rendering to the form controller(DONE)
 
 - Consider graphs/chars

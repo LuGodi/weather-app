@@ -15,7 +15,6 @@ nav {
 .hamburger-menu-button {
   width: 26px;
   height: 26px;
-  padding: 3px 5px;
   background-color: transparent;
   outline: none;
   border: 1px solid var(--lighter-color);
@@ -43,16 +42,25 @@ form {
 }
 form .close-button {
   font-size: 1rem;
-  /* margin-left: auto; */
   width: 26px;
   height: 26px;
   background-color: transparent;
   outline: none;
-  border: 1px solid var(--lighter-color);
+  border: none;
   position: absolute;
   top: 0px;
   right: 0px;
-  padding: 3px 5px;
+  cursor: pointer;
+}
+form #load-data-button {
+  font-size: 1rem;
+  width: 26px;
+  height: 26px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+
+  cursor: pointer;
 }
 dialog:not([open]) .close-button {
   animation: close-button-animation 0s linear;
