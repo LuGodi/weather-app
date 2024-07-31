@@ -45,7 +45,6 @@ export default class FormController {
     const form = document.createElement("form");
     const closeButton = document.createElement("button");
     const menuIcon = document.createElement("img");
-    const searchIcon = document.createElement("img");
     const searchContainer = this.#renderSearchInput();
     const scaleFieldset = this.#renderScaleFieldset(Weather.scale);
     closeButton.setAttribute("formmethod", "dialog");

@@ -70,7 +70,7 @@ export default class ScreenController {
     const topElement = this.#renderDayTopInfo(day, currentConditions);
     const midElement = this.#renderDayAdditionalInfo(day);
     const hourChart = this.renderHoursChart(day);
-    this.#setBackgroundColor(renderUtil.isNight(day));
+    this.#setBackgroundColor(renderUtil.isNight(day, currentConditions));
     // this.cachedDom.mainEl.replaceChildren(
     //   date,
     //   topElement,
