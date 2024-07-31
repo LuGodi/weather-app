@@ -59,6 +59,7 @@ export default class FormController {
     dialog.append(form);
     // dialog.addEventListener("close", FormController.modalListener);
     form.addEventListener("click", this.modalListener);
+    form.addEventListener("submit", (e) => this.loadData(e.currentTarget));
 
     return dialog;
   }
@@ -85,7 +86,7 @@ export default class FormController {
     const searchContainer = document.createElement("div");
     const searchInput = document.createElement("input");
     const label = document.createElement("label");
-    label.textContent = "Desired Location: ";
+    label.textContent = "Desired Location ";
     searchInput.id = "search-input";
     searchInput.name = "location";
     searchInput.type = "search";
@@ -96,6 +97,7 @@ export default class FormController {
     const searchImg = document.createElement("img");
     searchImg.src = SearchIcon;
     searchButton.value = "loadData";
+    searchButton.setAttribute("type", "submit");
     searchButton.id = "load-data-button";
     searchButton.append(searchImg);
 
@@ -107,7 +109,7 @@ export default class FormController {
   static #renderScaleFieldset(scaleObject) {
     const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
-    legend.textContent = "Choose a scale: ";
+    legend.textContent = "Choose a scale ";
 
     const radios = [];
     for (const scale of Object.keys(scaleObject)) {

@@ -6,17 +6,26 @@
   --darker-color: #111827;
   --day-color: linear-gradient(#4fbeff, var(--darker-color));
   --night-color: linear-gradient(black, var(--darker-color));
-  --dialog-color: #4262a6;
+  --dialog-color: #15213b;
   box-sizing: border-box;
 }
 * {
   margin: 0px;
   padding: 0px;
 }
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 body:has(.home) {
   background-color: black;
