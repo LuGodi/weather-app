@@ -1,5 +1,6 @@
 import Day from "./day.js";
 import Hour from "./hour.js";
+import { parseISO } from "date-fns";
 export default class Weather {
   static scale = {
     metric: {
@@ -136,6 +137,8 @@ export default class Weather {
 
       moonValue: day.moonphase,
       wind: day.windspeed,
+      //if parse is used instead of parseISO it returns the wrong datetime (usually the previous day instead of the correct day)
+      //to prevente using parseISO repetitively whevenever datetime is called, use it here instead
       datetime: day.datetime,
       precipitation: day.precipprob,
       uvIndex: day.uvindex,
@@ -144,7 +147,9 @@ export default class Weather {
       sunrise: day.sunrise,
       sunset: day.sunset,
     };
+    //Hours in days means its a day instance, else its processing the conditions for an hour.
     if ("hours" in day) {
+      weatherReport.datetime = this.#parseDate(weatherReport.datetime);
       weatherReport.hours = this.#processHours(day.hours);
     }
     return weatherReport;
@@ -186,5 +191,8 @@ export default class Weather {
         break;
     }
     return moonphase;
+  }
+  static #parseDate(date) {
+    return parseISO(date);
   }
 }

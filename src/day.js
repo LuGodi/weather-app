@@ -6,6 +6,7 @@ import windImg from "../assets/weather-icons/wind_icon.png";
 
 export default class Day {
   hours = [];
+  #moonValue;
   static icons = {
     temperature: termometerImg,
     humidity: humidityImg,
@@ -13,7 +14,7 @@ export default class Day {
     wind: windImg,
     tide: tideImg,
   };
-  #moonValue;
+
   constructor(dayReport, location) {
     this.location = location;
     this.temperature = {

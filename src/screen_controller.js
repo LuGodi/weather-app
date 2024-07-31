@@ -1,7 +1,7 @@
 import Weather from "./weather";
 import renderUtil from "./render_util";
 import FormController from "./form_controller";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 
 export default class ScreenController {
   //theres most certainly a better way
@@ -49,7 +49,7 @@ export default class ScreenController {
     const divEl = document.createElement("div");
     const dateSpan = document.createElement("span");
     const span = document.createElement("span");
-    dateSpan.textContent = format(parseISO(day.datetime), "dd/MM/yyyy");
+    dateSpan.textContent = format(day.datetime, "dd/MM/yyyy");
     span.textContent = `Updated at ${currentConditions.datetime}`;
     divEl.classList.add("date-container");
     divEl.append(dateSpan, span);
@@ -253,8 +253,8 @@ export default class ScreenController {
     rightContainer.classList.add("next-days-right-container");
     leftContainer.classList.add("next-days-left-container");
 
-    date.textContent = format(parseISO(day.datetime), "dd/MM/yyyy"); //TODO FORMAT RELATIVE
-    weekDay.textContent = format(parseISO(day.datetime), "EEEE");
+    date.textContent = format(day.datetime, "dd/MM/yyyy"); //TODO FORMAT RELATIVE
+    weekDay.textContent = format(day.datetime, "EEEE");
 
     leftContainer.append(weekDay, icon);
     rightContainer.append(temperatureContainer, rainChance, moon);

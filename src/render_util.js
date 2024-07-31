@@ -7,14 +7,10 @@ export default class renderUtil {
 
   //TODO find a better place for this
   static isNight(day, currentConditions) {
-    const current = parse(
-      currentConditions.datetime,
-      "HH:mm:ss",
-      parseISO(day.datetime)
-    );
+    const current = parse(currentConditions.datetime, "HH:mm:ss", day.datetime);
     console.log(current);
-    const sunrise = parse(day.sunrise, "HH:mm:ss", parseISO(day.datetime));
-    const sunset = parse(day.sunset, "HH:mm:ss", parseISO(day.datetime));
+    const sunrise = parse(day.sunrise, "HH:mm:ss", day.datetime);
+    const sunset = parse(day.sunset, "HH:mm:ss", day.datetime);
     console.log(sunrise);
     console.log(sunset);
     if (isAfter(current, sunrise) && isBefore(current, sunset)) {
