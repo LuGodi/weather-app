@@ -1,6 +1,7 @@
 Todo:
 
-separar os estilos pra cada modulo ao inves de ser um so
+- [ ] Minimize css
+- [ ] Separate css styles between each module
 
 - [x] Icon for loading
 - [x] Implement search as a transitioning menu - DONE

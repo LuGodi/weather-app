@@ -13,10 +13,7 @@ export default class FormController {
     console.log(event);
     const pressed = event.target.parentElement;
     console.log(pressed);
-    if (
-      pressed.tagName === "BUTTON" &&
-      (pressed.value === "loadData" || pressed.value === "closeDialog")
-    ) {
+    if (pressed.tagName === "BUTTON" && pressed.value === "closeDialog") {
       console.log(this);
       FormController[pressed.value](form);
     }

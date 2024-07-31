@@ -26,6 +26,7 @@ export default class App {
       });
   }
   static simulateLowEnd(time) {
+    if (time === 0) return Promise.resolve();
     console.log("simulate low end");
     return new Promise((res) => {
       setTimeout(() => res("hi"), time);
