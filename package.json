@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch --mode development",
     "build": "webpack --config webpack.dev.js",
+    "buildProd": "webpack --config webpack.prod.js",
     "serve": "webpack serve --open --config webpack.dev.js",
     "lint": "eslint"
   },
@@ -15,9 +16,11 @@
   "devDependencies": {
     "@eslint/js": "^9.6.0",
     "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
     "eslint": "^9.6.0",
     "globals": "^15.8.0",
     "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
