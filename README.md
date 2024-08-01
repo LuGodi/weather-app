@@ -1,8 +1,33 @@
-Todo:
+# Weather App
 
-- [ ] Minimize css
+Fetches weather information from Visual Crossing`s API and displays it to the user.
+
+Aiming to practice API integration and webpack
+
+## Features
+
+Background changes colors according to the searched location sunrise and sunset.
+
+Information for the next 7 days (today included).
+
+Hour information.
+
+Option for fahrenheit, celsius, km and miles.
+
+## Technologies
+
+- Webpack
+- Visual Crossing API
+- JavaScript
+- Node Package Manager
+- CSS
+
+---
+
+### Todo:
+
+- [x] Minimize css
 - [ ] Separate css styles between each module
-
 - [x] Icon for loading
 - [x] Implement search as a transitioning menu - DONE
 - [x] Implement visible message(render) on bad request( for instance invalid location)
@@ -24,3 +49,4 @@ Todo:
   - [x] Move the form rendering to the form controller(DONE)
 
 - Consider graphs/chars
+- [ ] Improve background changing colors
