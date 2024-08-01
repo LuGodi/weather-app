@@ -8,7 +8,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: "main.js",
+    filename: "app.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
@@ -17,6 +17,10 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
+      },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
       },
     ],
   },
