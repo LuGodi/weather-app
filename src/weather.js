@@ -53,9 +53,6 @@ export default class Weather {
         return this.processDays(weatherReport);
       })
       .then((processedDays) => {
-        console.log(processedDays);
-        console.log("omg here should work");
-        this.days.forEach((day) => console.log("hi this is a day", day));
         return;
         // return;
       })
@@ -75,11 +72,9 @@ export default class Weather {
     try {
       const response = await fetch(urlRequest);
       if (response.ok === false) {
-        console.log(response);
         throw new Error("failed to fetch", { cause: response.status });
       }
       const jsonData = await response.json();
-      console.log(jsonData);
       return jsonData;
     } catch (error) {
       throw new Error("faile in load function", { cause: error.cause });
@@ -106,8 +101,6 @@ export default class Weather {
 
     days.forEach((day) => {
       const dayReport = this.#processDay(day);
-      console.log(day);
-      console.log(dayReport);
 
       const dayInstance = new Day(dayReport, location);
 
@@ -120,7 +113,6 @@ export default class Weather {
     });
     const currentDay = this.#processDay(currentConditions);
     this.currentDay = new Day(currentDay, location);
-    console.log(this.currentDay);
     return this.days;
   }
   static #processDay(day) {

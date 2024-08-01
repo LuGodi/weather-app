@@ -16,7 +16,6 @@ export default class ScreenController {
   };
   static conditionIcons = renderUtil.importedConditionIcons();
   static init() {
-    console.log(this.cachedDom.modal);
     const home = this.renderHome();
     this.cachedDom.body.append(this.cachedDom.modal);
     this.cachedDom.mainEl.append(home);
@@ -80,7 +79,6 @@ export default class ScreenController {
     return [date, topElement, midElement, hourChart];
   }
   static #renderDayTopInfo(day, currentConditions) {
-    console.log(currentConditions);
     const topEl = document.createElement("div");
     const locationEl = document.createElement("span");
     const feelsLikeEl = document.createElement("span");
@@ -132,8 +130,7 @@ export default class ScreenController {
         containers[weatherProperty] = container;
       }
     });
-    console.log("logging containers ");
-    console.log(containers);
+
     midEl.classList.add("weather-mid");
     midEl.append(...Object.values(containers));
 

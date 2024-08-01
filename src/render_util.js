@@ -8,11 +8,9 @@ export default class renderUtil {
   //TODO find a better place for this
   static isNight(day, currentConditions) {
     const current = parse(currentConditions.datetime, "HH:mm:ss", day.datetime);
-    console.log(current);
     const sunrise = parse(day.sunrise, "HH:mm:ss", day.datetime);
     const sunset = parse(day.sunset, "HH:mm:ss", day.datetime);
-    console.log(sunrise);
-    console.log(sunset);
+
     if (isAfter(current, sunrise) && isBefore(current, sunset)) {
       return false;
     } else {
@@ -21,7 +19,6 @@ export default class renderUtil {
   }
 
   static #importAll(req) {
-    console.log("importing");
     const cache = {};
     req.keys().forEach((key) => {
       cache[key.replace("./", "")] = req(key);

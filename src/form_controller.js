@@ -10,20 +10,15 @@ export default class FormController {
   //Change to private
   static modalListener(event) {
     const form = event.currentTarget;
-    console.log(event);
     const pressed = event.target.parentElement;
-    console.log(pressed);
     if (pressed.tagName === "BUTTON" && pressed.value === "closeDialog") {
-      console.log(this);
       FormController[pressed.value](form);
     }
   }
 
   static loadData(form) {
-    console.log(form);
     const location = form.elements.location.value;
     const scale = form.elements.scale.value;
-    console.log(location, scale);
 
     // Weather.init(location, scale);
     this.closeDialog(form);
